@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/16 10:34:35 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/16 23:26:40 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdio.h>
 # include <pthread.h>
+
+# define INTERNAL_ERROR 1
+# define ARG_ERROR 2
 
 typedef struct s_philo
 {
