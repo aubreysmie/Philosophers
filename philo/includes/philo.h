@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/17 00:08:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/17 04:49:02 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
 
 typedef struct s_philo
 {
-	unsigned int	number_of_times_philosopher_has_eaten;
+	unsigned int	number;
 	pthread_t		thread;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
+	struct timeval	*last_time_philo_ate;
+	unsigned int	number_of_times_philosopher_has_eaten;
 }	t_philo;
 
 typedef struct s_data
