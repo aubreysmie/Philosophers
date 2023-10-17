@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:24:12 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/16 22:36:26 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 00:23:15 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ bool	are_uints(int argc, char **argv)
 	while (arg_index < argc)
 	{
 		i = 0;
+		if (!argv[arg_index][i])
+		{
+			write(2, "Error : Not all arguments are integers\n", 39);
+			return (0);
+		}
 		while (argv[arg_index][i])
 		{
 			if (!ft_isdigit(argv[arg_index][i]))
@@ -52,7 +57,7 @@ bool	are_uints(int argc, char **argv)
 
 bool	are_valid_uints(int argc, char **argv)
 {
-	int arg_index;
+	int	arg_index;
 	int	arg_len;
 
 	arg_index = 1;
@@ -73,6 +78,7 @@ bool	are_valid_uints(int argc, char **argv)
 			write(2, "Error : Not all arguments are valid integers\n", 45);
 			return (0);
 		}
+		arg_index++;
 	}
 	return (1);
 }
