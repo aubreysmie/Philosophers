@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/17 04:49:02 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 00:15:24 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdint.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# include "debug_colors.h"
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
