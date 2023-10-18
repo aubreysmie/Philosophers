@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 14:11:26 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 18:48:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,25 @@ typedef struct s_philo
 {
 	unsigned int	number;
 	pthread_t		thread;
-	t_fork			right_fork;
-	t_fork			left_fork;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
 	bool			has_just_slept;
 	struct timeval	last_time_philo_ate;
-	unsigned int	number_of_times_philosopher_has_eaten;
+	unsigned int	number_of_times_philo_has_eaten;
 	t_data			*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	unsigned int	number_of_philosophers;
+	unsigned int	number_of_philos;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	number_of_times_each_philosopher_must_eat;
-	t_philo			philos[];
-	t_fork			forks[];//might be necessary to clean later
+	unsigned int	number_of_times_each_philo_must_eat;
 	struct timeval	ref_time;
 	bool			is_anyone_dead;
+	t_fork			forks[];
+	t_philo			philos[];
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv, t_data *data);
@@ -65,5 +65,6 @@ int				ft_strlen(char *s);
 int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
+void			destroy_forks(t_fork *forks, unsigned int number_of_philos);
 
 #endif
