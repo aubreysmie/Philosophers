@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 18:48:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 19:21:13 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <pthread.h>
@@ -25,7 +26,7 @@
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
 
-typedef	t_data;
+typedef	struct s_data	t_data;
 
 typedef struct s_fork
 {
@@ -54,11 +55,13 @@ typedef struct s_data
 	unsigned int	number_of_times_each_philo_must_eat;
 	struct timeval	ref_time;
 	bool			is_anyone_dead;
-	t_fork			forks[];
-	t_philo			philos[];
+	t_fork			*forks;
+	t_philo			*philos;
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv, t_data *data);
+
+bool			init_data(int argc, char **argv, t_data *data);
 
 bool			ft_isdigit(char c);
 int				ft_strlen(char *s);

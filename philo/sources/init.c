@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 17:20:19 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 19:25:35 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ bool	init_data(int argc, char **argv, t_data *data)
 	if (gettimeofday(&data->ref_time, NULL))
 		return (0);
 	data->is_anyone_dead = false;
-	if (!init_forks(&data->forks, data->number_of_philosphers))
+	if (!init_forks(data->forks, data->number_of_philos))
 		return (0);
-	if (!init_philos(&data->philos, data))
+	if (!init_philos(data->philos, data))
 	{
-		destroy_forks(&data->forks, data->number_of_philosphers);
+		destroy_forks(data->forks, data->number_of_philos);
 		return (0);
 	}
 	return (1);
