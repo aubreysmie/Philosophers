@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 00:47:50 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:11:26 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 
 typedef	t_data;
 
+typedef struct s_fork
+{
+	pthread_mutex_t	mutex;
+	bool			is_used;
+}	t_fork;
+
 typedef struct s_philo
 {
 	unsigned int	number;
@@ -46,6 +52,7 @@ typedef struct s_data
 	unsigned int	time_to_sleep;
 	unsigned int	number_of_times_each_philosopher_must_eat;
 	t_philo			philos[];
+	t_fork			forks[];//might be necessary to clean later
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv, t_data *data);
