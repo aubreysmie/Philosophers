@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 14:15:46 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 19:07:15 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	*start_philo_routine(void *arg)
 		//usleep for is eating
 		pthread_mutex_unlock(&philo->left_fork.mutex);
 		pthread_mutex_unlock(&philo->right_fork.mutex);
-		philo->number_of_times_philosopher_has_eaten++;
-		if (philo->number_of_times_philosopher_has_eaten
-			== philo->data->number_of_times_each_philosopher_must_eat)
+		philo->number_of_times_philo_has_eaten++;
+		if (philo->number_of_times_philo_has_eaten
+			== philo->data->number_of_times_each_philo_must_eat)
 			break;
 		//disp is sleeping
 		//usleep for is sleeping
@@ -51,7 +51,7 @@ bool	start_sim(t_data *data)
 	void	*retval;
 
 	i = -1;
-	while (++i < data->number_of_philosophers)
+	while (++i < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
 			&start_philo_routine, (void *)data->philo[i]))//the thread needs to know which philo it is
@@ -61,7 +61,7 @@ bool	start_sim(t_data *data)
 		}
 	}
 	i = -1;
-	while (++i < data->number_of_philosophers)
+	while (++i < data->number_of_philos)
 	{
 		if (pthread_join(data->philos[i].thread, &retval)
 		|| retval == NULL)
