@@ -6,44 +6,81 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 00:56:01 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/18 17:20:19 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_philo_n(t_data *data, unsigned int n)
+bool	init_forks(t_fork *forks, unsigned int number_of_philos)
 {
-	data->philos[n].number = n;
+	int	i;
+
+	i = -1;
+	forks = malloc(sizeof(t_fork) * number_of_philos);
+	if (!forks)
+	{
+		write(2, "An internal error has occured\n", 30);
+		return (0);
+	}
+	while (++i < number_of_philos)
+	{
+		pthread_mutex_init(&forks[i].mutex, NULL);
+		forks[i].is_used = false;
+	}
+	return (1);
 }
 
-bool	init_philos(t_data *data)
+void	init_philo_n(t_philo *philos, t_fork *forks,
+			t_data *data, unsigned int n)
+{
+	philos[n].number = n;
+	philos[n].left_fork = forks + n;
+	if (n == (data->number_of_philos - 1))
+		philos[n].right_fork = forks + 0;
+	else
+		philos[n].right_fork = forks + (n + 1);
+	philos[n].has_just_slept = true;
+	philos[n].last_time_philo_ate = data->ref_time;
+	philos[n].number_of_times_philo_has_eaten = 0;
+	philos[n].data = data;
+}
+
+bool	init_philos(t_philo *philos, t_data *data)
 {
 	unsigned int	n;
 
-	n = 0;
-	data->philos = malloc(sizeof(t_philo) * data->number_of_philosophers);
-	if (!data->philos)
-		return (0);
-	while (n < data->number_of_philosophers)
+	n = -1;
+	philos = malloc(sizeof(t_philo) * data->number_of_philos);
+	if (!philos)
 	{
-		init_philo_n(data, n);
-		n++;
+		write(2, "An internal error has occured\n", 30);
+		return (0);
 	}
+	while (++n < data->number_of_philos)
+		init_philo_n(philos, data->forks, data, n);
 	return (1);
 }
 
 bool	init_data(int argc, char **argv, t_data *data)
 {
-	data->number_of_philosophers = ft_atoui(argv[1]);
+	data->number_of_philos = ft_atoui(argv[1]);
 	data->time_to_die = ft_atoui(argv[2]);
 	data->time_to_eat = ft_atoui(argv[3]);
 	data->time_to_sleep = ft_atoui(argv[4]);
 	if (argc == 6)
-		data->number_of_times_each_philosopher_must_eat = ft_atoui(argv[5]);
+		data->number_of_times_each_philo_must_eat = ft_atoui(argv[5]);
 	else
-		data->number_of_times_each_philosopher_must_eat = -1;
-	if (!init_philos(data))
+		data->number_of_times_each_philo_must_eat = -1;
+	if (gettimeofday(&data->ref_time, NULL))
 		return (0);
+	data->is_anyone_dead = false;
+	if (!init_forks(&data->forks, data->number_of_philosphers))
+		return (0);
+	if (!init_philos(&data->philos, data))
+	{
+		destroy_forks(&data->forks, data->number_of_philosphers);
+		return (0);
+	}
 	return (1);
 }
