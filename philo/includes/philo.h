@@ -37,9 +37,10 @@ typedef struct s_philo
 {
 	unsigned int	number;
 	pthread_t		thread;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
-	struct timeval	*last_time_philo_ate;
+	t_fork			right_fork;
+	t_fork			left_fork;
+	bool			has_just_slept;
+	struct timeval	last_time_philo_ate;
 	unsigned int	number_of_times_philosopher_has_eaten;
 	t_data			*data;
 }	t_philo;
@@ -53,6 +54,8 @@ typedef struct s_data
 	unsigned int	number_of_times_each_philosopher_must_eat;
 	t_philo			philos[];
 	t_fork			forks[];//might be necessary to clean later
+	struct timeval	ref_time;
+	bool			is_anyone_dead;
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv, t_data *data);
