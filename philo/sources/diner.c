@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 13:28:42 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 19:25:47 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	*start_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!philo->data->is_anyone_dead)//lacks : deathcheck + fulltum check
+	while (!philo->data->is_anyone_dead
+		&& philo->data->number_of_times_each_philo_must_eat
+		!= philo->data->how_many_philos_ate_enough)//lacks : deathcheck + fulltum check
 	{
 		if (philo->has_just_slept)//possible de le mettre dans le disp_action ?
 			disp_action(philo->number + 1, THINKING, philo->data);
@@ -60,7 +62,7 @@ bool	start_sim(t_data *data)
 	i = -1;
 	while (++i < data->number_of_philos)
 	{
-		if (pthread_join(data->philos[i].thread, NULL)
+		if (pthread_join(data->philos[i].thread, NULL))
 		{
 			write(2, "An internal error has occured\n", 30);
 			return (0);
