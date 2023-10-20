@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 12:53:32 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 12:59:45 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	*start_philo_routine(void *arg)
 		if (philo->has_just_slept)
 			//disp is thinking
 		philo->has_just_slept = false;
-		pthread_mutex_lock(&philo->left_fork.mutex);
-		philo->left_fork.is_used = true;
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		philo->left_fork->is_used = true;
 		//disp took fork
-		if (philo->right_fork.is_used)
+		if (philo->right_fork->is_used)
 		{
-			pthread_mutex_unlock(&philo->left_fork.mutex);
+			pthread_mutex_unlock(&philo->left_fork->mutex);
 			continue;
 		}
-		pthread_mutex_lock(&philo->right_fork.mutex);
+		pthread_mutex_lock(&philo->right_fork->mutex);
 		//disp is eating
 		//usleep for is eating
-		pthread_mutex_unlock(&philo->left_fork.mutex);
-		pthread_mutex_unlock(&philo->right_fork.mutex);
+		pthread_mutex_unlock(&philo->left_fork->mutex);
+		pthread_mutex_unlock(&philo->right_fork->mutex);
 		philo->number_of_times_philo_has_eaten++;
 		if (philo->number_of_times_philo_has_eaten
 			== philo->data->number_of_times_each_philo_must_eat)
@@ -53,7 +53,7 @@ bool	start_sim(t_data *data)
 	while (++i < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
-			&start_philo_routine, (void *)data->philo[i]))
+			&start_philo_routine, (void *)data->philos[i]))
 		{
 			write(2, "An internal error has occured\n", 30);
 			return (0);
