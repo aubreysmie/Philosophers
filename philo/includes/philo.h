@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 12:45:43 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 13:25:45 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
+
+enum	e_action
+{
+	TAKEN_A_FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DIED
+};
 
 typedef	struct s_data	t_data;
 
@@ -68,6 +77,9 @@ bool			ft_isdigit(char c);
 int				ft_strlen(char *s);
 int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
+
+void			disp_action(unsigned int philo_nb, enum e_action action,
+					t_data *data);
 
 void			destroy_forks(t_fork *forks, unsigned int number_of_philos);
 
