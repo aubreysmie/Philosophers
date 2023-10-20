@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 19:07:15 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 12:53:32 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,12 @@ void	*start_philo_routine(void *arg)
 bool	start_sim(t_data *data)
 {
 	int		i;
-	void	*retval;
 
 	i = -1;
 	while (++i < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
-			&start_philo_routine, (void *)data->philo[i]))//the thread needs to know which philo it is
+			&start_philo_routine, (void *)data->philo[i]))
 		{
 			write(2, "An internal error has occured\n", 30);
 			return (0);
@@ -63,8 +62,7 @@ bool	start_sim(t_data *data)
 	i = -1;
 	while (++i < data->number_of_philos)
 	{
-		if (pthread_join(data->philos[i].thread, &retval)
-		|| retval == NULL)
+		if (pthread_join(data->philos[i].thread, NULL)
 		{
 			write(2, "An internal error has occured\n", 30);
 			return (0);
