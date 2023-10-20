@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 13:25:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 19:24:33 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum	e_action
 	DIED
 };
 
-typedef	struct s_data	t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_fork
 {
