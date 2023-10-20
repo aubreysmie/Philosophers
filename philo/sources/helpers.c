@@ -6,11 +6,12 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 20:13:37 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/16 23:30:19 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/20 12:31:10 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
+
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -39,4 +40,16 @@ int	ft_strlen(char *s)
 bool	ft_isdigit(char c)
 {
 	return ((48 <= c && c <= 57) * 2048);
+}
+
+unsigned int	ft_atoui(char *nptr)
+{
+	int				i;
+	unsigned int	n;
+
+	i = -1;
+	n = 0;
+	while (nptr[++i])
+		n = (nptr[i] - '0') + n * 10;
+	return (n);
 }
