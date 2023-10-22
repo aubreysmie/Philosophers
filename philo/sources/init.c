@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/22 21:44:34 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/22 22:12:28 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_philo_n(t_philo *philos, t_fork *forks,
 		philos[n].right_fork = forks + 0;
 	else
 		philos[n].right_fork = forks + (n + 1);
-	philos[n].has_just_slept = true;
 	philos[n].last_time_philo_ate = data->ref_time;
 	philos[n].number_of_times_philo_has_eaten = 0;
 	philos[n].data = data;

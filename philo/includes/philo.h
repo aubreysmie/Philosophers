@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 19:24:33 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/22 21:52:36 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	bool			has_just_slept;
 	struct timeval	last_time_philo_ate;
 	unsigned int	number_of_times_philo_has_eaten;
 	t_data			*data;
