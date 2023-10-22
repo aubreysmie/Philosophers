@@ -19,7 +19,7 @@ void	*start_philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (!philo->data->is_anyone_dead
 		&& philo->data->number_of_times_each_philo_must_eat
-		!= philo->data->how_many_philos_ate_enough)//lacks : deathcheck + fulltum check
+		!= philo->data->number_of_philos_that_ate_enough)//lacks : deathcheck + fulltum check
 	{
 		if (philo->has_just_slept)//possible de le mettre dans le disp_action ?
 			disp_action(philo->number + 1, THINKING, philo->data);
