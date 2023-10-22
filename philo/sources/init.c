@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/20 18:59:22 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/22 21:44:34 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
+	// if (number_of_philos == 1)
+	// {
+	// 	(*forks)[0].mutex = PTHREAD_MUTEX_ERRORCHECK_NP;
+	// 	(*forks)[0].is_used = false;
+	// 	return (1);
+	// }
 	while (++i < number_of_philos)
 	{
 		pthread_mutex_init(&(*forks)[i].mutex, NULL);
