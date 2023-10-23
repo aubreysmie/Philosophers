@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/22 22:21:15 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:41:17 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_data
 	t_philo			*philos;
 }	t_data;
 
-bool			are_valid_params(int argc, char **argv, t_data *data);
+bool			are_valid_params(int argc, char **argv);
 
 bool			init_data(int argc, char **argv, t_data *data);
 

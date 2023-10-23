@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:24:12 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 00:23:15 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:40:27 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool	are_valid_uints(int argc, char **argv)
 	return (1);
 }
 
-bool	are_valid_params(int argc, char **argv, t_data *data)
+bool	are_valid_params(int argc, char **argv)
 {
 	if (!is_valid_arg_nb(argc))
 		return (0);

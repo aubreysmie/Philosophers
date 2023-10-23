@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:08:29 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/18 19:20:25 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:40:45 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (!are_valid_params(argc, argv, &data))
+	if (!are_valid_params(argc, argv))
 		return (ARG_ERROR);
 	if (!init_data(argc, argv, &data))
 		return (INTERNAL_ERROR);
