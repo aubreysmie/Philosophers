@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/22 22:21:15 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:40:01 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 {
-	int	i;
+	unsigned int	i;
 
 	i = -1;
 	*forks = malloc(sizeof(t_fork) * number_of_philos);

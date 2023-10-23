@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/23 00:48:28 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:39:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	*sim_philo_routine(void *arg)//write protection for single philo; init mute
 
 bool	start_sim(t_data *data)
 {
-	int		i;
+	unsigned int	i;
 
 	i = -1;
 	while (++i < data->number_of_philos)
