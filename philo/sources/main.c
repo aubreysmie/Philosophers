@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:08:29 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/23 15:40:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/24 02:02:58 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	main(int argc, char **argv)
 		return (ARG_ERROR);
 	if (!init_data(argc, argv, &data))
 		return (INTERNAL_ERROR);
-	// if (!start_sim(&data))
-	// {
-	// 	destroy_forks(data.forks, data.number_of_philos);
-	// 	free(data.philos);
-	// 	return (INTERNAL_ERROR);
-	// }
+	if (!start_sim(&data))
+	{
+		destroy_forks(data.forks, data.number_of_philos);
+		free(data.philos);
+		return (INTERNAL_ERROR);
+	}
 	destroy_forks(data.forks, data.number_of_philos);
 	free(data.philos);
 	return (0);
