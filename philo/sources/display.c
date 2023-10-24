@@ -6,20 +6,21 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:05:37 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/24 02:05:30 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/24 18:51:39 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	disp_action(unsigned int philo_nb, enum e_action action, t_data *data)
+void	disp_action(unsigned int philo_nb, enum e_action action,
+	struct timeval ref_time)
 {
 	struct timeval	tv;
 	long int		interval;
 
 	gettimeofday(&tv, NULL);
-	interval = (tv.tv_usec - data->ref_time.tv_usec)
-		+ (tv.tv_sec - data->ref_time.tv_sec) * 1000000;
+	interval = (tv.tv_usec - ref_time.tv_usec)
+		+ (tv.tv_sec - ref_time.tv_sec) * 1000000;
 	if (action == TAKEN_A_FORK)
 		printf("%li %d has taken a fork\n", interval, philo_nb);
 	if (action == THINKING)

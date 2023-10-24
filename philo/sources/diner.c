@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/24 13:12:23 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/24 18:53:06 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	sim_thinking(t_philo *philo)
 {
-	disp_action(philo->number + 1, THINKING, philo->data);
+	disp_action(philo->number + 1, THINKING, philo->data->ref_time);
 	while (!philo->data->should_sim_stop)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
@@ -26,7 +26,7 @@ int	sim_thinking(t_philo *philo)
 		}
 		philo->left_fork->is_taken = true;
 		pthread_mutex_unlock(&philo->left_fork->mutex);
-		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
+		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data->ref_time);
 		pthread_mutex_lock(&philo->right_fork->mutex);
 		if (&philo->right_fork->is_taken)
 		{
@@ -39,7 +39,7 @@ int	sim_thinking(t_philo *philo)
 		}
 		philo->right_fork->is_taken = true;
 		pthread_mutex_unlock(&philo->right_fork->mutex);
-		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
+		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data->ref_time);
 		return (1);
 	}
 	return (0);
@@ -47,7 +47,7 @@ int	sim_thinking(t_philo *philo)
 
 int	sim_eating(t_philo *philo)
 {
-	disp_action(philo->number + 1, EATING, philo->data);
+	disp_action(philo->number + 1, EATING, philo->data->ref_time);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
@@ -66,7 +66,7 @@ int	sim_eating(t_philo *philo)
 
 int	sim_sleeping(t_philo *philo)
 {
-	disp_action(philo->number + 1, SLEEPING, philo->data);
+	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time);
 	usleep(philo->data->time_to_sleep);
 	return (1);
 }
