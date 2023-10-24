@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/23 15:40:01 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/24 12:32:55 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 	// if (number_of_philos == 1)
 	// {
 	// 	(*forks)[0].mutex = PTHREAD_MUTEX_ERRORCHECK_NP;
-	// 	(*forks)[0].is_used = false;
+	// 	(*forks)[0].is_taken = false;
 	// 	return (1);
 	// }
 	while (++i < number_of_philos)
 	{
 		pthread_mutex_init(&(*forks)[i].mutex, NULL);
-		(*forks)[i].is_used = false;
+		(*forks)[i].is_taken = false;
 	}
 	return (1);
 }

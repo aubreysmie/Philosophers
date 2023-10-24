@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/23 15:39:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/24 13:12:23 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	sim_eating(t_philo *philo)
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
-	philo->left_fork->is_used = false;
+	philo->left_fork->is_taken = false;
 	pthread_mutex_unlock(&philo->right_fork->mutex);
-	philo->right_fork->is_used = false;
+	philo->right_fork->is_taken = false;
 	philo->number_of_times_philo_has_eaten++;
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
