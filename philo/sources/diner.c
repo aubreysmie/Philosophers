@@ -15,21 +15,34 @@
 int	sim_thinking(t_philo *philo)
 {
 	disp_action(philo->number + 1, THINKING, philo->data);
-	pthread_mutex_lock(&philo->left_fork->mutex);
-	philo->left_fork->is_used = true;
-	disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
-	while (philo->right_fork->is_used)
+	while (!philo->data->should_sim_stop)
 	{
-		pthread_mutex_unlock(&philo->left_fork->mutex);
-		philo->left_fork->is_used = false;
 		pthread_mutex_lock(&philo->left_fork->mutex);
-		philo->left_fork->is_used = true;
+		if (&philo->left_fork->is_taken)
+		{
+			pthread_mutex_unlock(&philo->left_fork->mutex);
+			usleep(10);
+			continue ;
+		}
+		philo->left_fork->is_taken = true;
+		pthread_mutex_unlock(&philo->left_fork->mutex);
 		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		if (&philo->right_fork->is_taken)
+		{
+			pthread_mutex_unlock(&philo->right_fork->mutex);
+			pthread_mutex_lock(&philo->left_fork->mutex);
+			philo->left_fork->is_taken = false;
+			pthread_mutex_unlock(&philo->left_fork->mutex);
+			usleep(10);
+			continue ;
+		}
+		philo->right_fork->is_taken = true;
+		pthread_mutex_unlock(&philo->right_fork->mutex);
+		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
+		return (1);
 	}
-	pthread_mutex_lock(&philo->right_fork->mutex);
-	philo->left_fork->is_used = true;
-	disp_action(philo->number + 1, TAKEN_A_FORK, philo->data);
-	return (1);
+	return (0);
 }
 
 int	sim_eating(t_philo *philo)
