@@ -14,8 +14,8 @@
 
 bool	sim_thinking(t_philo *philo)
 {
-	while (!philo->data->should_sim_stop)
 	disp_action(philo->number + 1, THINKING, philo->data->ref_time, NULL);
+	while (true)
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (&philo->left_fork->is_taken)
@@ -78,19 +78,18 @@ bool	sim_eating(t_philo *philo)
 
 bool	sim_sleeping(t_philo *philo)
 {
-	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time);
-	usleep(philo->data->time_to_sleep);
+	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time, NULL);
+	if (!complete_action(philo->data->time_to_sleep))
+		return (0);
 	return (1);
 }
 
-void	*sim_philo_routine(void *arg)//write protection for single philo; init mutex with error check
+void	*sim_philo_routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!philo->data->is_anyone_dead
-		&& philo->data->number_of_times_each_philo_must_eat
-		!= philo->data->number_of_philos_that_ate_enough)//lacks : deathcheck + fulltum check
+	while (true)
 	{
 		if (!sim_thinking(philo))
 			break ;
