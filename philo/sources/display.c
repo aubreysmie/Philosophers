@@ -30,10 +30,8 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 	if (action == DIED)
 		printf("%lu %d died\n", interval, philo_nb);
 	if (action == EATING)
-		usleep(data->time_to_eat);
 		printf("%lu %d is eating\n", interval, philo_nb);
 	if (action == SLEEPING)
-		usleep(data->time_to_sleep);
 		printf("%lu %d is sleeping\n", interval, philo_nb);
 	pthread_mutex_unlock(&print_lock);
 }
