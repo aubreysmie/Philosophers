@@ -13,15 +13,15 @@
 #include "philo.h"
 
 void	disp_action(unsigned int philo_nb, enum e_action action,
-	struct timeval ref_time)
+	struct timeval ref_time, struct timeval *tv)
 {
-	struct timeval	tv;
 	static pthread_mutex_t	print_lock = PTHREAD_MUTEX_INITIALIZER;
 	long unsigned int		interval;
 
-	gettimeofday(&tv, NULL);
-	interval = (tv.tv_usec - ref_time.tv_usec)
-		+ (tv.tv_sec - ref_time.tv_sec) * 1000000;
+	if (tv == NULL)
+		gettimeofday(tv, NULL);
+	interval = (tv->tv_usec - ref_time.tv_usec)
+		+ (tv->tv_sec - ref_time.tv_sec) * 1000000;
 	pthread_mutex_lock(&print_lock);
 	if (action == TAKEN_A_FORK)
 		printf("%lu %d has taken a fork\n", interval, philo_nb);

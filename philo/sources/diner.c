@@ -14,8 +14,8 @@
 
 int	sim_thinking(t_philo *philo)
 {
-	disp_action(philo->number + 1, THINKING, philo->data->ref_time);
 	while (!philo->data->should_sim_stop)
+	disp_action(philo->number + 1, THINKING, philo->data->ref_time, NULL);
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
 		if (&philo->left_fork->is_taken)
@@ -26,9 +26,10 @@ int	sim_thinking(t_philo *philo)
 		}
 		philo->left_fork->is_taken = true;
 		pthread_mutex_unlock(&philo->left_fork->mutex);
-		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data->ref_time);
 		pthread_mutex_lock(&philo->right_fork->mutex);
 		if (&philo->right_fork->is_taken)
+		disp_action(philo->number + 1, TAKEN_A_FORK,
+			philo->data->ref_time, NULL);
 		{
 			pthread_mutex_unlock(&philo->right_fork->mutex);
 			pthread_mutex_lock(&philo->left_fork->mutex);
@@ -39,7 +40,8 @@ int	sim_thinking(t_philo *philo)
 		}
 		philo->right_fork->is_taken = true;
 		pthread_mutex_unlock(&philo->right_fork->mutex);
-		disp_action(philo->number + 1, TAKEN_A_FORK, philo->data->ref_time);
+		disp_action(philo->number + 1, TAKEN_A_FORK,
+			philo->data->ref_time, NULL);
 		return (1);
 	}
 	return (0);
