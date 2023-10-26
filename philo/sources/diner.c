@@ -17,29 +17,23 @@ bool	sim_thinking(t_philo *philo)
 	disp_action(philo->number + 1, THINKING, philo->data->ref_time, NULL);
 	while (true)
 	{
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		if (&philo->left_fork->is_taken)
+		if (!take_fork(philo->left_fork))
 		{
-			pthread_mutex_unlock(&philo->left_fork->mutex);
 			usleep(10);
+			if (!should_sim_stop(philo))
+				break ;
 			continue ;
 		}
-		philo->left_fork->is_taken = true;
-		pthread_mutex_unlock(&philo->left_fork->mutex);
-		pthread_mutex_lock(&philo->right_fork->mutex);
-		if (&philo->right_fork->is_taken)
 		disp_action(philo->number + 1, TAKEN_A_FORK,
 			philo->data->ref_time, NULL);
+		if (!take_fork(philo->right_fork))
 		{
-			pthread_mutex_unlock(&philo->right_fork->mutex);
-			pthread_mutex_lock(&philo->left_fork->mutex);
-			philo->left_fork->is_taken = false;
-			pthread_mutex_unlock(&philo->left_fork->mutex);
+			drop_fork(philo->left_fork);
 			usleep(10);
+			if (!should_sim_stop(philo))
+				break ;
 			continue ;
 		}
-		philo->right_fork->is_taken = true;
-		pthread_mutex_unlock(&philo->right_fork->mutex);
 		disp_action(philo->number + 1, TAKEN_A_FORK,
 			philo->data->ref_time, NULL);
 		return (1);
@@ -53,11 +47,10 @@ bool	sim_eating(t_philo *philo)
 
 	disp_action(philo->number + 1, EATING, philo->data->ref_time);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
-	usleep(philo->data->time_to_eat);
-	pthread_mutex_unlock(&philo->left_fork->mutex);
-	philo->left_fork->is_taken = false;
-	pthread_mutex_unlock(&philo->right_fork->mutex);
-	philo->right_fork->is_taken = false;
+	if (!complete_action(philo, philo->data->time_to_eat))
+		return (0);
+	drop_fork(philo->left_fork);
+	drop_fork(philo->right_fork);
 	philo->number_of_times_philo_has_eaten++;
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)

@@ -80,6 +80,11 @@ bool			init_data(int argc, char **argv, t_data *data);
 
 bool			start_sim(t_data *data);
 
+bool			take_fork(t_fork *fork);
+bool			drop_fork(t_fork *fork);
+bool			should_sim_stop(t_philo *philo);
+bool			complete_action(t_philo *philo, unsigned int time_for_action);
+
 bool			ft_isdigit(char c);
 int				ft_strlen(char *s);
 int				ft_strcmp(char *s1, char *s2);
