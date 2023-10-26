@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/24 12:32:37 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/26 14:19:46 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct s_philo
 	t_data			*data;
 }	t_philo;
 
+typedef struct s_sim_status
+{
+	pthread_mutex_t	mutex;
+	bool			should_sim_stop;
+}	t_sim_status;
+
 typedef struct s_data
 {
 	unsigned int	number_of_philos;
@@ -63,7 +69,7 @@ typedef struct s_data
 	unsigned int	number_of_times_each_philo_must_eat;
 	unsigned int	number_of_philos_that_ate_enough;
 	struct timeval	ref_time;
-	bool			is_anyone_dead;
+	t_sim_status	sim_status;
 	t_fork			*forks;
 	t_philo			*philos;
 }	t_data;

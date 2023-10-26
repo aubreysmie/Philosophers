@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/24 18:53:06 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/26 13:38:04 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	sim_thinking(t_philo *philo)
 
 int	sim_eating(t_philo *philo)
 {
+	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
+
 	disp_action(philo->number + 1, EATING, philo->data->ref_time);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	usleep(philo->data->time_to_eat);
@@ -57,10 +59,18 @@ int	sim_eating(t_philo *philo)
 	philo->number_of_times_philo_has_eaten++;
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
+	{
+		pthread_mutex_lock(&fulltum_lock);
 		philo->data->number_of_philos_that_ate_enough++;
-	if (philo->data->number_of_philos_that_ate_enough
-		== philo->data->number_of_philos)
-		return (0);
+		if (philo->data->number_of_philos_that_ate_enough
+			== philo->data->number_of_philos)
+		{
+			pthread_mutex_lock(&philo->data->sim_status.mutex);
+			philo->data->sim_status.should_sim_stop = true;
+			pthread_mutex_unlock(&philo->data->sim_status.mutex);
+		}
+		pthread_mutex_unlock(&fulltum_lock);
+	}
 	return (1);
 }
 
