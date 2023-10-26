@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int	sim_thinking(t_philo *philo)
+bool	sim_thinking(t_philo *philo)
 {
 	while (!philo->data->should_sim_stop)
 	disp_action(philo->number + 1, THINKING, philo->data->ref_time, NULL);
@@ -47,7 +47,7 @@ int	sim_thinking(t_philo *philo)
 	return (0);
 }
 
-int	sim_eating(t_philo *philo)
+bool	sim_eating(t_philo *philo)
 {
 	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -76,7 +76,7 @@ int	sim_eating(t_philo *philo)
 	return (1);
 }
 
-int	sim_sleeping(t_philo *philo)
+bool	sim_sleeping(t_philo *philo)
 {
 	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time);
 	usleep(philo->data->time_to_sleep);
