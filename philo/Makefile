@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 14:56:45 by ekhaled           #+#    #+#              #
-#    Updated: 2023/10/23 15:38:13 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/10/26 14:20:55 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,12 @@ NAME		:=	philo
 SRC_DIR		:=	sources
 OBJ_DIR		:=	objects
 SRCS		:=	destroy.c \
-				diner.c \
+				dinner_helpers.c \
+				dinner.c \
 				display.c \
-				helpers.c \
 				init.c \
 				main.c \
+				parse_helpers.c \
 				parse.c
 SRCS		:=	${SRCS:%=${SRC_DIR}/%}
 OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
