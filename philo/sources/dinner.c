@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   diner.c                                            :+:      :+:    :+:   */
+/*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 13:38:04 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/26 15:25:52 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	sim_eating(t_philo *philo)
 {
 	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
 
-	disp_action(philo->number + 1, EATING, philo->data->ref_time);
+	disp_action(philo->number + 1, EATING, philo->data->ref_time, NULL);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	if (!complete_action(philo, philo->data->time_to_eat))
 		return (0);
@@ -72,7 +72,7 @@ bool	sim_eating(t_philo *philo)
 bool	sim_sleeping(t_philo *philo)
 {
 	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time, NULL);
-	if (!complete_action(philo->data->time_to_sleep))
+	if (!complete_action(philo, philo->data->time_to_sleep))
 		return (0);
 	return (1);
 }

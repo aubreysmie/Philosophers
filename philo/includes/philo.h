@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 14:19:46 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/26 15:23:30 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool			init_data(int argc, char **argv, t_data *data);
 bool			start_sim(t_data *data);
 
 bool			take_fork(t_fork *fork);
-bool			drop_fork(t_fork *fork);
+void			drop_fork(t_fork *fork);
 bool			should_sim_stop(t_philo *philo);
 bool			complete_action(t_philo *philo, unsigned int time_for_action);
 
