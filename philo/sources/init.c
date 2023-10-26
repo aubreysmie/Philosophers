@@ -23,12 +23,6 @@ bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
-	// if (number_of_philos == 1)
-	// {
-	// 	(*forks)[0].mutex = PTHREAD_MUTEX_ERRORCHECK_NP;
-	// 	(*forks)[0].is_taken = false;
-	// 	return (1);
-	// }
 	while (++i < number_of_philos)
 	{
 		pthread_mutex_init(&(*forks)[i].mutex, NULL);
