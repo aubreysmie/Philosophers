@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 15:25:52 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:32:43 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ void	*sim_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	// dprintf(2, "hi\n");
+	pthread_mutex_lock(&philo->data->sim_start_mutex);
+	pthread_mutex_unlock(&philo->data->sim_start_mutex);
+	// usleep(100);
 	while (true)
 	{
 		if (!sim_thinking(philo))
@@ -98,6 +102,7 @@ bool	start_sim(t_data *data)
 {
 	unsigned int	i;
 
+	pthread_mutex_lock(&data->sim_start_mutex);
 	i = -1;
 	while (++i < data->number_of_philos)
 	{
@@ -108,6 +113,8 @@ bool	start_sim(t_data *data)
 			return (0);
 		}
 	}
+	gettimeofday(&data->ref_time, NULL);
+	pthread_mutex_unlock(&data->sim_start_mutex);
 	i = -1;
 	while (++i < data->number_of_philos)
 	{

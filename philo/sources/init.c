@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 14:22:19 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:26:17 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ bool	init_data(int argc, char **argv, t_data *data)
 	else
 		data->number_of_times_each_philo_must_eat = -1;
 	data->number_of_philos_that_ate_enough = 0;
-	gettimeofday(&data->ref_time, NULL);
+	// gettimeofday(&data->ref_time, NULL);
 	pthread_mutex_init(&data->sim_status.mutex, NULL);
 	data->sim_status.should_sim_stop = false;
+	pthread_mutex_init(&data->sim_start_mutex, NULL);
 	if (!init_forks(&data->forks, data->number_of_philos))
 		return (0);
 	if (!init_philos(&data->philos, data))
