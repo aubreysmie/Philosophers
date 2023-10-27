@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 14:56:45 by ekhaled           #+#    #+#              #
-#    Updated: 2023/10/26 14:20:55 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/10/27 12:38:31 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
 # CC			:=	cc
 LIBFLAGS	:=	-pthread
-CFLAGS		:=	-Wall -Wextra -Werror
+DEBUGFLAG	:=	-g3
+CFLAGS		:=	-Wall -Wextra -Werror ${DEBUGFLAG}
 CPPFLAGS	:=	-I includes
 
 
