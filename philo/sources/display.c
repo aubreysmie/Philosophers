@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:05:37 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 13:22:24 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 15:11:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 {
 	static pthread_mutex_t	print_lock = PTHREAD_MUTEX_INITIALIZER;
 	struct timeval			tv;
-	long unsigned int		interval;
+	unsigned int		interval;
 
 	pthread_mutex_lock(&print_lock);
 	if (action == DIED)
@@ -35,14 +35,14 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 	}
 	pthread_mutex_unlock(&data->sim_status.mutex);
 	if (action == TAKEN_A_FORK)
-		printf("%lu %d has taken a fork\n", interval, philo_nb);
+		printf("%u %d has taken a fork\n", interval, philo_nb);
 	if (action == THINKING)
-		printf("%lu %d is thinking\n", interval, philo_nb);
+		printf("%u %d is thinking\n", interval, philo_nb);
 	if (action == DIED)
-		printf("%lu %d died\n", interval, philo_nb);
+		printf("%u %d died\n", interval, philo_nb);
 	if (action == EATING)
-		printf("%lu %d is eating\n", interval, philo_nb);
+		printf("%u %d is eating\n", interval, philo_nb);
 	if (action == SLEEPING)
-		printf("%lu %d is sleeping\n", interval, philo_nb);
+		printf("%u %d is sleeping\n", interval, philo_nb);
 	pthread_mutex_unlock(&print_lock);
 }

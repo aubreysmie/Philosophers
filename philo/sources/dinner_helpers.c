@@ -35,7 +35,7 @@ void	drop_fork(t_fork *fork)
 bool	should_sim_stop(t_philo *philo)
 {
 	struct timeval			tv;
-	long unsigned int		interval;
+	unsigned int		interval;
 
 	gettimeofday(&tv, NULL);
 	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
@@ -62,7 +62,7 @@ bool	should_sim_stop(t_philo *philo)
 bool	complete_action(t_philo *philo, unsigned int time_for_action)
 {
 	struct timeval		tv;
-	long unsigned int	interval;
+	unsigned int	interval;
 
 	gettimeofday(&tv, NULL);
 	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
