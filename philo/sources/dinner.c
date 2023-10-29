@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 15:32:43 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 20:45:49 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	*sim_philo_routine(void *arg)
 			break ;
 		if (!sim_sleeping(philo))
 			break ;
+		// dprintf(2, "Sleep over\n");
 	}
 	return (NULL);
 }
@@ -113,7 +114,7 @@ bool	start_sim(t_data *data)
 			return (0);
 		}
 	}
-	gettimeofday(&data->ref_time, NULL);
+	// gettimeofday(&data->ref_time, NULL);
 	pthread_mutex_unlock(&data->sim_start_mutex);
 	i = -1;
 	while (++i < data->number_of_philos)

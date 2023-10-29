@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:05:37 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 14:08:40 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 17:03:27 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 		tv = *needed_tv;
 	else
 		gettimeofday(&tv, NULL);
-	interval = (tv.tv_usec - ref_time.tv_usec)
-		+ (tv.tv_sec - ref_time.tv_sec) * 1000000;
+	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
+		- (ref_time.tv_usec / 1000 + ref_time.tv_sec * 1000);
 	if (action == TAKEN_A_FORK)
 		printf("%lu %d has taken a fork\n", interval, philo_nb);
 	if (action == THINKING)

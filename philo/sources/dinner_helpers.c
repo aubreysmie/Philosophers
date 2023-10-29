@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 13:35:20 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 17:17:32 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ bool	should_sim_stop(t_philo *philo)
 	long unsigned int		interval;
 
 	gettimeofday(&tv, NULL);
-	interval = (tv.tv_usec - philo->last_time_philo_ate.tv_usec)
-		+ (tv.tv_sec - philo->last_time_philo_ate.tv_sec) * 1000000;
+	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
+		- (philo->last_time_philo_ate.tv_usec / 1000 + philo->last_time_philo_ate.tv_sec * 1000);
+	// dprintf(2, "Interval : %lu\n", interval);
 	if (interval > philo->data->time_to_die)
 	{
 		disp_action(philo->number + 1, DIED, philo->data->ref_time, &tv);
@@ -64,13 +65,14 @@ bool	complete_action(t_philo *philo, unsigned int time_for_action)
 	unsigned int		interval;
 
 	gettimeofday(&tv, NULL);
-	interval = (tv.tv_usec - philo->last_time_philo_ate.tv_usec)
-		+ (tv.tv_sec - philo->last_time_philo_ate.tv_sec) * 1000000;
+	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
+		- (philo->last_time_philo_ate.tv_usec / 1000 + philo->last_time_philo_ate.tv_sec * 1000);
 	if (interval + time_for_action < philo->data->time_to_die)
 	{
-		usleep(time_for_action);
+		usleep(time_for_action * 1000);
 		return (should_sim_stop(philo));
 	}
-	usleep(philo->data->time_to_die - interval);
+	dprintf(2, "%sNot enough time before death to carry out action%s\n", KRED, KEND);
+	usleep((philo->data->time_to_die - interval) * 1000);
 	return (should_sim_stop(philo));
 }
