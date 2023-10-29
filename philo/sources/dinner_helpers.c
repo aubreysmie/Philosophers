@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 17:17:32 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 13:05:17 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	should_sim_stop(t_philo *philo)
 bool	complete_action(t_philo *philo, unsigned int time_for_action)
 {
 	struct timeval		tv;
-	unsigned int		interval;
+	long unsigned int	interval;
 
 	gettimeofday(&tv, NULL);
 	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
