@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 20:45:49 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 13:19:36 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	sim_thinking(t_philo *philo)
 {
-	disp_action(philo->number + 1, THINKING, philo->data->ref_time, NULL);
+	disp_action(philo->number + 1, THINKING, philo->data, NULL);
 	while (true)
 	{
 		if (!take_fork(philo->left_fork))
@@ -25,7 +25,7 @@ bool	sim_thinking(t_philo *philo)
 			continue ;
 		}
 		disp_action(philo->number + 1, TAKEN_A_FORK,
-			philo->data->ref_time, NULL);
+			philo->data, NULL);
 		if (!take_fork(philo->right_fork))
 		{
 			drop_fork(philo->left_fork);
@@ -35,7 +35,7 @@ bool	sim_thinking(t_philo *philo)
 			continue ;
 		}
 		disp_action(philo->number + 1, TAKEN_A_FORK,
-			philo->data->ref_time, NULL);
+			philo->data, NULL);
 		return (1);
 	}
 	return (0);
@@ -45,7 +45,7 @@ bool	sim_eating(t_philo *philo)
 {
 	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
 
-	disp_action(philo->number + 1, EATING, philo->data->ref_time, NULL);
+	disp_action(philo->number + 1, EATING, philo->data, NULL);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	if (!complete_action(philo, philo->data->time_to_eat))
 		return (0);
@@ -71,7 +71,7 @@ bool	sim_eating(t_philo *philo)
 
 bool	sim_sleeping(t_philo *philo)
 {
-	disp_action(philo->number + 1, SLEEPING, philo->data->ref_time, NULL);
+	disp_action(philo->number + 1, SLEEPING, philo->data, NULL);
 	if (!complete_action(philo, philo->data->time_to_sleep))
 		return (0);
 	return (1);

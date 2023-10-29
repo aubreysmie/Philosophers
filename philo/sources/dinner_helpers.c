@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 13:05:17 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 13:18:47 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	should_sim_stop(t_philo *philo)
 	// dprintf(2, "Interval : %lu\n", interval);
 	if (interval > philo->data->time_to_die)
 	{
-		disp_action(philo->number + 1, DIED, philo->data->ref_time, &tv);
+		disp_action(philo->number + 1, DIED, philo->data, &tv);
 		pthread_mutex_lock(&philo->data->sim_status.mutex);
 		philo->data->sim_status.should_sim_stop = true;
 		pthread_mutex_unlock(&philo->data->sim_status.mutex);
@@ -72,7 +72,7 @@ bool	complete_action(t_philo *philo, unsigned int time_for_action)
 		usleep(time_for_action * 1000);
 		return (should_sim_stop(philo));
 	}
-	dprintf(2, "%sNot enough time before death to carry out action%s\n", KRED, KEND);
+	// dprintf(2, "%sNot enough time before death to carry out action%s\n", KRED, KEND);
 	usleep((philo->data->time_to_die - interval) * 1000);
 	return (should_sim_stop(philo));
 }

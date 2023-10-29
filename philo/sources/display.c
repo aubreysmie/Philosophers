@@ -6,14 +6,14 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:05:37 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 17:03:27 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 13:22:24 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	disp_action(unsigned int philo_nb, enum e_action action,
-	struct timeval ref_time, struct timeval *needed_tv)
+	t_data *data, struct timeval *needed_tv)
 {
 	static pthread_mutex_t	print_lock = PTHREAD_MUTEX_INITIALIZER;
 	struct timeval			tv;
@@ -25,7 +25,15 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 	else
 		gettimeofday(&tv, NULL);
 	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
-		- (ref_time.tv_usec / 1000 + ref_time.tv_sec * 1000);
+		- (data->ref_time.tv_usec / 1000 + data->ref_time.tv_sec * 1000);
+	pthread_mutex_lock(&data->sim_status.mutex);
+	if (data->sim_status.should_sim_stop)
+	{
+		pthread_mutex_unlock(&data->sim_status.mutex);
+		pthread_mutex_unlock(&print_lock);
+		return ;
+	}
+	pthread_mutex_unlock(&data->sim_status.mutex);
 	if (action == TAKEN_A_FORK)
 		printf("%lu %d has taken a fork\n", interval, philo_nb);
 	if (action == THINKING)
