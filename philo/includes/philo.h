@@ -92,7 +92,7 @@ int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
 void			disp_action(unsigned int philo_nb, enum e_action action,
-					struct timeval ref_time, struct timeval *tv);
+					t_data *data, struct timeval *tv);
 
 void			destroy_forks(t_fork *forks, unsigned int number_of_philos);
 
