@@ -34,8 +34,8 @@ void	drop_fork(t_fork *fork)
 
 bool	should_sim_stop(t_philo *philo)
 {
-	struct timeval	tv;
-	long int		interval;
+	struct timeval			tv;
+	long unsigned int		interval;
 
 	gettimeofday(&tv, NULL);
 	interval = (tv.tv_usec - philo->last_time_philo_ate.tv_usec)
