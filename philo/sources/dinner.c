@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 13:19:36 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 14:49:55 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ bool	start_sim(t_data *data)
 			return (0);
 		}
 	}
-	// gettimeofday(&data->ref_time, NULL);
 	pthread_mutex_unlock(&data->sim_start_mutex);
 	i = -1;
 	while (++i < data->number_of_philos)
