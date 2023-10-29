@@ -24,8 +24,7 @@ void	disp_action(unsigned int philo_nb, enum e_action action,
 		tv = *needed_tv;
 	else
 		gettimeofday(&tv, NULL);
-	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
-		- (data->ref_time.tv_usec / 1000 + data->ref_time.tv_sec * 1000);
+	interval = timeval_to_ms(tv) - timeval_to_ms(data->ref_time);
 	pthread_mutex_lock(&data->sim_status.mutex);
 	if (data->sim_status.should_sim_stop)
 	{

@@ -6,11 +6,16 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 13:18:47 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/29 15:10:53 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+unsigned int	timeval_to_ms(struct timeval tv)
+{
+	return (tv.tv_usec / 1000 + tv.tv_sec * 1000);
+}
 
 bool	take_fork(t_fork *fork)
 {
@@ -38,8 +43,7 @@ bool	should_sim_stop(t_philo *philo)
 	unsigned int		interval;
 
 	gettimeofday(&tv, NULL);
-	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
-		- (philo->last_time_philo_ate.tv_usec / 1000 + philo->last_time_philo_ate.tv_sec * 1000);
+	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
 	// dprintf(2, "Interval : %lu\n", interval);
 	if (interval > philo->data->time_to_die)
 	{
@@ -65,8 +69,7 @@ bool	complete_action(t_philo *philo, unsigned int time_for_action)
 	unsigned int	interval;
 
 	gettimeofday(&tv, NULL);
-	interval = tv.tv_usec / 1000 + tv.tv_sec * 1000
-		- (philo->last_time_philo_ate.tv_usec / 1000 + philo->last_time_philo_ate.tv_sec * 1000);
+	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
 	if (interval + time_for_action < philo->data->time_to_die)
 	{
 		usleep(time_for_action * 1000);
