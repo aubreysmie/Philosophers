@@ -19,7 +19,7 @@ bool	sim_thinking(t_philo *philo)
 	{
 		if (!take_fork(philo->left_fork))
 		{
-			usleep(10);
+			usleep(1000);
 			if (!should_sim_stop(philo))
 				break ;
 			continue ;
@@ -29,7 +29,7 @@ bool	sim_thinking(t_philo *philo)
 		if (!take_fork(philo->right_fork))
 		{
 			drop_fork(philo->left_fork);
-			usleep(10);
+			usleep(1000);
 			if (!should_sim_stop(philo))
 				break ;
 			continue ;
