@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/26 15:23:30 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:24:00 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_data
 	unsigned int	number_of_philos_that_ate_enough;
 	struct timeval	ref_time;
 	t_sim_status	sim_status;
+	pthread_mutex_t	sim_start_mutex;
 	t_fork			*forks;
 	t_philo			*philos;
 }	t_data;
