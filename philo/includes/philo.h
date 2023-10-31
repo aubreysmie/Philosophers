@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/27 15:24:00 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/10/31 13:46:49 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ bool			init_data(int argc, char **argv, t_data *data);
 
 bool			start_sim(t_data *data);
 
+unsigned int	timeval_to_ms(struct timeval tv);
 bool			take_fork(t_fork *fork);
 void			drop_fork(t_fork *fork);
 bool			should_sim_stop(t_philo *philo);
