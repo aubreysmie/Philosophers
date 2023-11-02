@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 15:10:53 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/02 12:33:30 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,20 @@ bool	should_sim_stop(t_philo *philo)
 	gettimeofday(&tv, NULL);
 	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
 	// dprintf(2, "Interval : %lu\n", interval);
+	pthread_mutex_lock(&philo->data->sim_status.mutex);
 	if (interval > philo->data->time_to_die)
 	{
-		disp_action(philo->number + 1, DIED, philo->data, &tv);
-		pthread_mutex_lock(&philo->data->sim_status.mutex);
+		// pthread_mutex_lock(&philo->data->sim_status.mutex);
+		if (philo->data->sim_status.should_sim_stop)
+		{
+			pthread_mutex_unlock(&philo->data->sim_status.mutex);
+			return (0);
+		}
 		philo->data->sim_status.should_sim_stop = true;
 		pthread_mutex_unlock(&philo->data->sim_status.mutex);
+		disp_action(philo->number + 1, DIED, philo->data, &tv);
 		return (0);
 	}
-	pthread_mutex_lock(&philo->data->sim_status.mutex);
 	if (philo->data->sim_status.should_sim_stop)
 	{
 		pthread_mutex_unlock(&philo->data->sim_status.mutex);
