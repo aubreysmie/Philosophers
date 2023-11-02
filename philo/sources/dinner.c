@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/02 13:28:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:04:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,32 @@
 
 void	wait_to_take_fork(t_philo *philo)
 {
-	struct timeval		tv;
-	// unsigned int		current_time;
-	unsigned int		interval;
+	struct timeval			tv;
+	// unsigned int			current_time;
+	unsigned int			time_since_ate;
+	// static pthread_mutex_t	print_lock;
 
 	if (!philo->data->time_to_die)
 		return ;
+	// pthread_mutex_lock(&print_lock);
 	gettimeofday(&tv, NULL);
 	// dprintf(2, "Hi do we ger here\n");
-	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
+	time_since_ate = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
 	// current_time = timeval_to_ms(tv) - timeval_to_ms(philo->data->ref_time);
-	// dprintf(2, "Philo %d : Time : %u, time since ate : %u, time to die : %u\n",
-		// philo->number + 1, current_time, interval, philo->data->time_to_die);
-	if (interval > philo->data->time_to_die / 2)
+	// dprintf(2, "%sPhilo %d : Time : %u, time since ate : %u, time to die : %u%s\n", KGRN,
+		// philo->number + 1, current_time, time_since_ate, philo->data->time_to_die, KEND);
+	// dprintf(2, "time to die * 2/3 : %f\n", philo->data->time_to_die * ((float) 2) / ((float) 3));
+	if (time_since_ate > philo->data->time_to_die * ((float) 1) / ((float) 2))
+	{
+		// pthread_mutex_unlock(&print_lock);
 		return ;
-	usleep (1000);
+	}
+	// dprintf(2, "%sPhilo %u has to wait%s\n", KCYN, philo->number + 1, KEND);
+	usleep (4000);
+	// dprintf(2, "%sPhilo %u finished waiting%s\n", KMAG, philo->number + 1, KEND);
+	// pthread_mutex_unlock(&print_lock);
 	// return ;
-	// usleep(1000 + 5000 * (1 - interval / philo->data->time_to_die));
+	// usleep(1000 + 5000 * (1 - time_since_ate / philo->data->time_to_die));
 }
 
 bool	sim_thinking(t_philo *philo)
