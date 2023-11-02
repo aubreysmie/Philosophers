@@ -6,11 +6,32 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/29 14:49:55 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/02 13:28:11 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	wait_to_take_fork(t_philo *philo)
+{
+	struct timeval		tv;
+	// unsigned int		current_time;
+	unsigned int		interval;
+
+	if (!philo->data->time_to_die)
+		return ;
+	gettimeofday(&tv, NULL);
+	// dprintf(2, "Hi do we ger here\n");
+	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
+	// current_time = timeval_to_ms(tv) - timeval_to_ms(philo->data->ref_time);
+	// dprintf(2, "Philo %d : Time : %u, time since ate : %u, time to die : %u\n",
+		// philo->number + 1, current_time, interval, philo->data->time_to_die);
+	if (interval > philo->data->time_to_die / 2)
+		return ;
+	usleep (1000);
+	// return ;
+	// usleep(1000 + 5000 * (1 - interval / philo->data->time_to_die));
+}
 
 bool	sim_thinking(t_philo *philo)
 {
@@ -19,19 +40,27 @@ bool	sim_thinking(t_philo *philo)
 	{
 		if (!take_fork(philo->left_fork))
 		{
-			usleep(1000);
+			// usleep(1000);
+			wait_to_take_fork(philo);
 			if (!should_sim_stop(philo))
+			{
+				// dprintf(2, "%sBroke on first fork try%s\n", KYEL, KEND);
 				break ;
+			}
 			continue ;
 		}
-		disp_action(philo->number + 1, TAKEN_A_FORK,
-			philo->data, NULL);
+		// disp_action(philo->number + 1, TAKEN_A_FORK,
+		// 	philo->data, NULL);
 		if (!take_fork(philo->right_fork))
 		{
 			drop_fork(philo->left_fork);
-			usleep(1000);
+			// usleep(1000);
+			wait_to_take_fork(philo);
 			if (!should_sim_stop(philo))
+			{
+				// dprintf(2, "%sBroke on second fork try%s\n", KYEL, KEND);
 				break ;
+			}
 			continue ;
 		}
 		disp_action(philo->number + 1, TAKEN_A_FORK,
@@ -52,9 +81,14 @@ bool	sim_eating(t_philo *philo)
 	drop_fork(philo->left_fork);
 	drop_fork(philo->right_fork);
 	philo->number_of_times_philo_has_eaten++;
+	// dprintf(2, "%sNumber of time philo %u has eaten : %u%s\n",
+		// KCYN, philo->number+ 1, philo->number_of_times_philo_has_eaten, KEND);
+	// dprintf(2, "%sNumber of time each philo must eat : %u%s\n", KGRN,
+		// philo->data->number_of_times_each_philo_must_eat, KEND);
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
 	{
+		// dprintf(2, "%sDo we ever get here%s\n", KMAG, KEND);
 		pthread_mutex_lock(&fulltum_lock);
 		philo->data->number_of_philos_that_ate_enough++;
 		if (philo->data->number_of_philos_that_ate_enough
@@ -89,11 +123,20 @@ void	*sim_philo_routine(void *arg)
 	while (true)
 	{
 		if (!sim_thinking(philo))
+		{
+			// dprintf(2, "%sBroke on think%s\n", KRED, KEND);
 			break ;
+		}
 		if (!sim_eating(philo))
+		{
+			// dprintf(2, "%sBroke on eat%s\n", KRED, KEND);
 			break ;
+		}
 		if (!sim_sleeping(philo))
+		{
+			// dprintf(2, "%sBroke on sleep%s\n", KRED, KEND);
 			break ;
+		}
 		// dprintf(2, "Sleep over\n");
 	}
 	return (NULL);
