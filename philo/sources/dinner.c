@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 02:02:31 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 02:12:48 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	*sim_philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->sim_start_mutex);
 	pthread_mutex_unlock(&philo->data->sim_start_mutex);
+	if (philo->number % 2)
+		usleep(1000);
 	while (true)
 	{
 		if (!sim_thinking(philo))
