@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/02 12:33:30 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 03:10:00 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,13 @@ void	drop_fork(t_fork *fork)
 bool	should_sim_stop(t_philo *philo)
 {
 	struct timeval			tv;
-	unsigned int		interval;
+	unsigned int			interval;
 
 	gettimeofday(&tv, NULL);
 	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
-	// dprintf(2, "Interval : %lu\n", interval);
 	pthread_mutex_lock(&philo->data->sim_status.mutex);
 	if (interval > philo->data->time_to_die)
 	{
-		// pthread_mutex_lock(&philo->data->sim_status.mutex);
 		if (philo->data->sim_status.should_sim_stop)
 		{
 			pthread_mutex_unlock(&philo->data->sim_status.mutex);
@@ -71,16 +69,16 @@ bool	should_sim_stop(t_philo *philo)
 bool	complete_action(t_philo *philo, unsigned int time_for_action)
 {
 	struct timeval		tv;
-	unsigned int	interval;
+	unsigned int		time_since_ate;
 
 	gettimeofday(&tv, NULL);
-	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
-	if (interval + time_for_action < philo->data->time_to_die)
+	time_since_ate = timeval_to_ms(tv)
+		- timeval_to_ms(philo->last_time_philo_ate);
+	if (time_since_ate + time_for_action < philo->data->time_to_die)
 	{
 		usleep(time_for_action * 1000);
 		return (should_sim_stop(philo));
 	}
-	// dprintf(2, "%sNot enough time before death to carry out action%s\n", KRED, KEND);
-	usleep((philo->data->time_to_die - interval) * 1000);
+	usleep((philo->data->time_to_die - time_since_ate) * 1000);
 	return (should_sim_stop(philo));
 }
