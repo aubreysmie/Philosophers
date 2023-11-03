@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/10/31 13:46:49 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 03:22:04 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int				ft_strlen(char *s);
 int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
+void			safe_disp_action(unsigned int philo_nb, enum e_action action,
+					t_data *data, struct timeval *tv);
 void			disp_action(unsigned int philo_nb, enum e_action action,
 					t_data *data, struct timeval *tv);
 

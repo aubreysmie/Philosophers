@@ -6,13 +6,13 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 02:22:54 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 03:36:37 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	wait_to_take_fork(t_philo *philo)
+void	wait_for_fork(t_philo *philo)
 {
 	struct timeval			tv;
 	unsigned int			time_since_ate;
@@ -30,14 +30,14 @@ void	wait_to_take_fork(t_philo *philo)
 
 bool	sim_thinking(t_philo *philo)
 {
-	disp_action(philo->number + 1, THINKING, philo->data, NULL);
+	safe_disp_action(philo->number + 1, THINKING, philo->data, NULL);
 	while (true)
 	{
 		if (!take_fork(philo->left_fork))
 		{
 			if (!should_sim_stop(philo))
 				break ;
-			wait_to_take_fork(philo);
+			wait_for_fork(philo);
 			continue ;
 		}
 		if (!take_fork(philo->right_fork))
@@ -47,7 +47,7 @@ bool	sim_thinking(t_philo *philo)
 				break ;
 			continue ;
 		}
-		disp_action(philo->number + 1, TAKEN_A_FORK,
+		safe_disp_action(philo->number + 1, TAKEN_A_FORK,
 			philo->data, NULL);
 		return (1);
 	}
@@ -58,13 +58,13 @@ bool	sim_eating(t_philo *philo)
 {
 	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
 
-	disp_action(philo->number + 1, EATING, philo->data, NULL);
+	safe_disp_action(philo->number + 1, EATING, philo->data, NULL);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	if (!complete_action(philo, philo->data->time_to_eat))
 		return (0);
 	drop_fork(philo->left_fork);
 	drop_fork(philo->right_fork);
-	philo->number_of_times_philo_has_eaten++;
+	philo->number_of_times_philo_has_eaten++;//make that part a different function
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
 	{
@@ -84,7 +84,7 @@ bool	sim_eating(t_philo *philo)
 
 bool	sim_sleeping(t_philo *philo)
 {
-	disp_action(philo->number + 1, SLEEPING, philo->data, NULL);
+	safe_disp_action(philo->number + 1, SLEEPING, philo->data, NULL);
 	if (!complete_action(philo, philo->data->time_to_sleep))
 		return (0);
 	return (1);
@@ -120,7 +120,7 @@ bool	start_sim(t_data *data)
 	while (++i < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
-				&sim_philo_routine, (void *)(data->philos + i)))
+				&sim_philo_routine, (void *)(data->philos + i)))//what velimir said
 		{
 			write(2, "An internal error has occured\n", 30);
 			return (0);

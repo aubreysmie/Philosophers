@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 03:10:00 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 03:17:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ bool	should_sim_stop(t_philo *philo)
 			return (0);
 		}
 		philo->data->sim_status.should_sim_stop = true;
-		pthread_mutex_unlock(&philo->data->sim_status.mutex);
 		disp_action(philo->number + 1, DIED, philo->data, &tv);
+		pthread_mutex_unlock(&philo->data->sim_status.mutex);
 		return (0);
 	}
 	if (philo->data->sim_status.should_sim_stop)
