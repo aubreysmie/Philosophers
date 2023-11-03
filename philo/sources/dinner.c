@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 01:13:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 01:57:12 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,26 @@
 void	wait_to_take_fork(t_philo *philo)
 {
 	struct timeval			tv;
-	unsigned int			time_since_ate;
+	// unsigned int			current_time;
+	// unsigned int			time_since_ate;
+	// static pthread_mutex_t	print_lock;
 
 	if (!philo->data->time_to_die || !philo->data->time_to_eat)
 		return ;
+	// pthread_mutex_lock(&print_lock);
 	gettimeofday(&tv, NULL);
-	time_since_ate = timeval_to_ms(tv)
-		- timeval_to_ms(philo->last_time_philo_ate);
-	if (time_since_ate > philo->data->time_to_die * ((float) 1) / ((float) 2)
-		|| philo->number_of_times_philo_has_eaten == 0)
+	// current_time = timeval_to_ms(tv) - timeval_to_ms(philo->data->ref_time);
+	// time_since_ate = timeval_to_ms(tv)
+	// 	- timeval_to_ms(philo->last_time_philo_ate);
+	if (philo->number_of_times_philo_has_eaten == 0)
+	{
+		// pthread_mutex_unlock(&print_lock);
 		return ;
-	usleep(philo->data->time_to_eat * 1000);
+	}
+	// dprintf(2, "Time %u : Philo %u will wait time_to_eat\n",
+	// 	current_time, philo->number + 1);
+	// pthread_mutex_unlock(&print_lock);
+	usleep(philo->data->time_to_eat * 500);
 }
 
 bool	sim_thinking(t_philo *philo)
@@ -33,11 +42,11 @@ bool	sim_thinking(t_philo *philo)
 	disp_action(philo->number + 1, THINKING, philo->data, NULL);
 	while (true)
 	{
-		wait_to_take_fork(philo);
 		if (!take_fork(philo->left_fork))
 		{
 			if (!should_sim_stop(philo))
 				break ;
+			wait_to_take_fork(philo);
 			continue ;
 		}
 		if (!take_fork(philo->right_fork))
