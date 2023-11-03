@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 01:57:12 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/03 02:02:31 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	wait_to_take_fork(t_philo *philo)
 {
 	struct timeval			tv;
 	// unsigned int			current_time;
-	// unsigned int			time_since_ate;
+	unsigned int			time_since_ate;
 	// static pthread_mutex_t	print_lock;
 
 	if (!philo->data->time_to_die || !philo->data->time_to_eat)
@@ -24,8 +24,8 @@ void	wait_to_take_fork(t_philo *philo)
 	// pthread_mutex_lock(&print_lock);
 	gettimeofday(&tv, NULL);
 	// current_time = timeval_to_ms(tv) - timeval_to_ms(philo->data->ref_time);
-	// time_since_ate = timeval_to_ms(tv)
-	// 	- timeval_to_ms(philo->last_time_philo_ate);
+	time_since_ate = timeval_to_ms(tv)
+		- timeval_to_ms(philo->last_time_philo_ate);
 	if (philo->number_of_times_philo_has_eaten == 0)
 	{
 		// pthread_mutex_unlock(&print_lock);
@@ -34,7 +34,8 @@ void	wait_to_take_fork(t_philo *philo)
 	// dprintf(2, "Time %u : Philo %u will wait time_to_eat\n",
 	// 	current_time, philo->number + 1);
 	// pthread_mutex_unlock(&print_lock);
-	usleep(philo->data->time_to_eat * 500);
+	usleep(philo->data->time_to_eat * 1000
+		* (1 - ((float) time_since_ate) / (float) philo->data->time_to_die));
 }
 
 bool	sim_thinking(t_philo *philo)
