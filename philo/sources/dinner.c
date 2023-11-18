@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 16:39:58 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 18:45:09 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	wait_for_fork(t_philo *philo)
 
 bool	sim_thinking(t_philo *philo)
 {
+	if (!should_sim_stop(philo))
+		return (0);
 	safe_disp_action(philo->number + 1, THINKING, philo->data, NULL);
 	wait_for_fork(philo);
 	while (true)
@@ -81,6 +83,8 @@ bool	is_enough_meals(t_philo *philo)
 
 bool	sim_eating(t_philo *philo)
 {
+	if (!should_sim_stop(philo))
+		return (0);
 	philo->number_of_times_philo_has_eaten++;
 	if (!is_enough_meals(philo))
 		safe_disp_action(philo->number + 1, EATING, philo->data, NULL);
@@ -94,6 +98,8 @@ bool	sim_eating(t_philo *philo)
 
 bool	sim_sleeping(t_philo *philo)
 {
+	if (!should_sim_stop(philo))
+		return (0);
 	safe_disp_action(philo->number + 1, SLEEPING, philo->data, NULL);
 	if (!complete_action(philo, philo->data->time_to_sleep))
 		return (0);
