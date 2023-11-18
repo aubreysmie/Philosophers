@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 12:23:42 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 12:54:10 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 {
 	unsigned int	i;
 
-	i = -1;
+	i = 0;
 	*forks = malloc(sizeof(t_fork) * number_of_philos);
 	if (!*forks)
 	{
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
-	while (++i < number_of_philos)
+	while (i < number_of_philos)
 	{
 		pthread_mutex_init(&(*forks)[i].mutex, NULL);
 		(*forks)[i].is_taken = false;
+		i++;
 	}
 	return (1);
 }
@@ -49,15 +50,18 @@ bool	init_philos(t_philo **philos, t_data *data)
 {
 	unsigned int	n;
 
-	n = -1;
+	n = 0;
 	*philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (!*philos)
 	{
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
-	while (++n < data->number_of_philos)
+	while (n < data->number_of_philos)
+	{
 		init_philo_n(*philos, data->forks, data, n);
+		n++;
+	}
 	return (1);
 }
 

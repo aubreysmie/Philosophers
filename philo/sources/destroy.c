@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:19:55 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 12:27:18 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 12:54:47 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ void	destroy_forks(t_fork *forks, unsigned int number_of_philos)
 {
 	unsigned int	i;
 
-	i = -1;
-	while (++i < number_of_philos)
+	i = 0;
+	while (i < number_of_philos)
+	{
 		pthread_mutex_destroy(&forks[i].mutex);
+		i++;
+	}
 	free(forks);
 }
 

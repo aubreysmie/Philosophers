@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 03:36:37 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 12:52:50 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ bool	start_sim(t_data *data)
 	unsigned int	i;
 
 	pthread_mutex_lock(&data->sim_start_mutex);
-	i = -1;
-	while (++i < data->number_of_philos)
+	i = 0;
+	while (i < data->number_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
 				&sim_philo_routine, (void *)(data->philos + i)))//what velimir said
@@ -125,6 +125,7 @@ bool	start_sim(t_data *data)
 			write(2, "An internal error has occured\n", 30);
 			return (0);
 		}
+		i++;
 	}
 	pthread_mutex_unlock(&data->sim_start_mutex);
 	i = -1;
