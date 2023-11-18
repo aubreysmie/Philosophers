@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 16:30:41 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:39:58 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	wait_for_fork(t_philo *philo)
 bool	sim_thinking(t_philo *philo)
 {
 	safe_disp_action(philo->number + 1, THINKING, philo->data, NULL);
+	wait_for_fork(philo);
 	while (true)
 	{
 		if (!take_fork(philo->left_fork))
