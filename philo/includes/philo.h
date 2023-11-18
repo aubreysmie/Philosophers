@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 19:23:02 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 23:32:23 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ bool			are_valid_params(int argc, char **argv);
 
 bool			init_data(int argc, char **argv, t_data *data);
 
+void			destroy_data(t_data *data);
+
 bool			start_sim(t_data *data);
 void			*sim_philo_routine(void *arg);
 
@@ -101,7 +103,5 @@ void			safe_disp_action(unsigned int philo_nb, enum e_action action,
 					t_data *data, struct timeval *tv);
 void			disp_action(unsigned int philo_nb, enum e_action action,
 					t_data *data, struct timeval *tv);
-
-void			destroy_all(t_data *data);
 
 #endif

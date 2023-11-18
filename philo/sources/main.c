@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 19:08:29 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 12:27:17 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 23:31:59 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	main(int argc, char **argv)
 		return (INTERNAL_ERROR);
 	if (!start_sim(&data))
 	{
-		destroy_all(&data);
+		destroy_data(&data);
 		return (INTERNAL_ERROR);
 	}
-	destroy_all(&data);
+	destroy_data(&data);
 	return (0);
 }

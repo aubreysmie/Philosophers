@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:19:55 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 19:10:48 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 23:31:43 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	destroy_forks(t_fork *forks, unsigned int number_of_philos)
 	free(forks);
 }
 
-void	destroy_all(t_data *data)
+void	destroy_data(t_data *data)
 {
 	pthread_mutex_destroy(&data->sim_status.mutex);
 	pthread_mutex_destroy(&data->sim_start_mutex);
