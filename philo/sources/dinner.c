@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 13:30:01 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:30:41 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,40 @@ bool	sim_thinking(t_philo *philo)
 	return (0);
 }
 
+bool	is_enough_meals(t_philo *philo)
+{
+	static pthread_mutex_t	full_philo_lock = PTHREAD_MUTEX_INITIALIZER;
+
+	if (philo->number_of_times_philo_has_eaten
+		== philo->data->number_of_times_each_philo_must_eat)
+	{
+		pthread_mutex_lock(&full_philo_lock);
+		philo->data->number_of_philos_that_ate_enough++;
+		if (philo->data->number_of_philos_that_ate_enough
+			== philo->data->number_of_philos)
+		{
+			pthread_mutex_unlock(&full_philo_lock);
+			pthread_mutex_lock(&philo->data->sim_status.mutex);
+			philo->data->sim_status.should_sim_stop = true;
+			disp_action(philo->number + 1, EATING, philo->data, NULL);
+			pthread_mutex_unlock(&philo->data->sim_status.mutex);
+			return (1);
+		}
+		pthread_mutex_unlock(&full_philo_lock);
+	}
+	return (0);
+}
+
 bool	sim_eating(t_philo *philo)
 {
-	static pthread_mutex_t	fulltum_lock = PTHREAD_MUTEX_INITIALIZER;
-
-	safe_disp_action(philo->number + 1, EATING, philo->data, NULL);
+	philo->number_of_times_philo_has_eaten++;
+	if (!is_enough_meals(philo))
+		safe_disp_action(philo->number + 1, EATING, philo->data, NULL);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	if (!complete_action(philo, philo->data->time_to_eat))
 		return (0);
 	drop_fork(philo->left_fork);
 	drop_fork(philo->right_fork);
-	philo->number_of_times_philo_has_eaten++;//make that part a different function
-	if (philo->number_of_times_philo_has_eaten
-		== philo->data->number_of_times_each_philo_must_eat)
-	{
-		pthread_mutex_lock(&fulltum_lock);
-		philo->data->number_of_philos_that_ate_enough++;
-		if (philo->data->number_of_philos_that_ate_enough
-			== philo->data->number_of_philos)
-		{
-			pthread_mutex_lock(&philo->data->sim_status.mutex);
-			philo->data->sim_status.should_sim_stop = true;
-			pthread_mutex_unlock(&philo->data->sim_status.mutex);
-		}
-		pthread_mutex_unlock(&fulltum_lock);
-	}
 	return (1);
 }
 
