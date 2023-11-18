@@ -121,7 +121,7 @@ void	*sim_philo_routine(void *arg)
 	}
 	pthread_mutex_unlock(&philo->data->sim_status.mutex);
 	if (philo->number % 2)
-		usleep(1000);
+		usleep(2000);
 	while (true)
 	{
 		if (!sim_thinking(philo))
