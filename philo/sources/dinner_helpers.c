@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/03 03:17:14 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:04:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,15 @@ bool	should_sim_stop(t_philo *philo)
 	gettimeofday(&tv, NULL);
 	interval = timeval_to_ms(tv) - timeval_to_ms(philo->last_time_philo_ate);
 	pthread_mutex_lock(&philo->data->sim_status.mutex);
-	if (interval > philo->data->time_to_die)
+	if (philo->data->sim_status.should_sim_stop)
 	{
-		if (philo->data->sim_status.should_sim_stop)
-		{
-			pthread_mutex_unlock(&philo->data->sim_status.mutex);
-			return (0);
-		}
-		philo->data->sim_status.should_sim_stop = true;
-		disp_action(philo->number + 1, DIED, philo->data, &tv);
 		pthread_mutex_unlock(&philo->data->sim_status.mutex);
 		return (0);
 	}
-	if (philo->data->sim_status.should_sim_stop)
+	if (interval > philo->data->time_to_die)
 	{
+		philo->data->sim_status.should_sim_stop = true;
+		disp_action(philo->number + 1, DIED, philo->data, &tv);
 		pthread_mutex_unlock(&philo->data->sim_status.mutex);
 		return (0);
 	}
