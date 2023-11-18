@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 23:20:12 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 23:28:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
 bool			init_data(int argc, char **argv, t_data *data);
+
+void			destroy_data(t_data *data);
 
 #endif
