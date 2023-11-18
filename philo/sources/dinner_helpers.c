@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 12:56:38 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 16:04:14 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 18:55:56 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,13 @@ bool	complete_action(t_philo *philo, unsigned int time_for_action)
 		return (should_sim_stop(philo));
 	}
 	usleep((philo->data->time_to_die - time_since_ate) * 1000);
-	return (should_sim_stop(philo));
+	pthread_mutex_lock(&philo->data->sim_status.mutex);
+	gettimeofday(&tv, NULL);
+	if (!philo->data->sim_status.should_sim_stop)
+	{
+		philo->data->sim_status.should_sim_stop = true;
+		disp_action(philo->number + 1, DIED, philo->data, &tv);
+	}
+	pthread_mutex_unlock(&philo->data->sim_status.mutex);
+	return (0);
 }
