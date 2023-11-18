@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 12:27:30 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 13:35:29 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ bool			are_valid_params(int argc, char **argv);
 bool			init_data(int argc, char **argv, t_data *data);
 
 bool			start_sim(t_data *data);
+
+void			*sim_philo_routine(void *arg);
 
 unsigned int	timeval_to_ms(struct timeval tv);
 bool			take_fork(t_fork *fork);

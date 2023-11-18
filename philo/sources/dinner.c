@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:21:49 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 12:52:50 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 13:30:01 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,13 @@ void	*sim_philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->sim_start_mutex);
 	pthread_mutex_unlock(&philo->data->sim_start_mutex);
+	pthread_mutex_lock(&philo->data->sim_status.mutex);
+	if (philo->data->sim_status.should_sim_stop)
+	{
+		pthread_mutex_unlock(&philo->data->sim_status.mutex);
+		return (NULL);
+	}
+	pthread_mutex_unlock(&philo->data->sim_status.mutex);
 	if (philo->number % 2)
 		usleep(1000);
 	while (true)
@@ -111,31 +118,3 @@ void	*sim_philo_routine(void *arg)
 	return (NULL);
 }
 
-bool	start_sim(t_data *data)
-{
-	unsigned int	i;
-
-	pthread_mutex_lock(&data->sim_start_mutex);
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		if (pthread_create(&data->philos[i].thread, NULL,
-				&sim_philo_routine, (void *)(data->philos + i)))//what velimir said
-		{
-			write(2, "An internal error has occured\n", 30);
-			return (0);
-		}
-		i++;
-	}
-	pthread_mutex_unlock(&data->sim_start_mutex);
-	i = -1;
-	while (++i < data->number_of_philos)
-	{
-		if (pthread_join(data->philos[i].thread, NULL))
-		{
-			write(2, "An internal error has occured\n", 30);
-			return (0);
-		}
-	}
-	return (1);
-}
