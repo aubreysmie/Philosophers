@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 17:32:03 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 23:21:43 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ bool	init_forks(t_fork **forks, unsigned int number_of_philos)
 	return (1);
 }
 
-void	init_philo_n(t_philo *philos, t_fork *forks,
-			t_data *data, unsigned int n)
+void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
 {
 	philos[n].number = n;
-	philos[n].left_fork = forks + n;
+	philos[n].left_fork = data->forks + n;
 	if (n == (data->number_of_philos - 1))
-		philos[n].right_fork = forks + 0;
+		philos[n].right_fork = data->forks + 0;
 	else
-		philos[n].right_fork = forks + (n + 1);
+		philos[n].right_fork = data->forks + (n + 1);
 	philos[n].last_time_philo_ate = data->ref_time;
 	philos[n].number_of_times_philo_has_eaten = 0;
 	philos[n].data = data;
@@ -59,7 +58,7 @@ bool	init_philos(t_philo **philos, t_data *data)
 	}
 	while (n < data->number_of_philos)
 	{
-		init_philo_n(*philos, data->forks, data, n);
+		init_philo_n(*philos, data, n);
 		n++;
 	}
 	return (1);
