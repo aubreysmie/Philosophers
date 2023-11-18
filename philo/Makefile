@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 14:56:45 by ekhaled           #+#    #+#              #
-#    Updated: 2023/11/18 13:36:33 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/11/18 19:17:31 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,14 @@ SRCS		:=	destroy.c \
 				main.c \
 				parse_helpers.c \
 				parse.c \
-				threads_manager.c
+				threads_manager.c \
+				time_checks.c
 SRCS		:=	${SRCS:%=${SRC_DIR}/%}
 OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
 # CC			:=	cc
 LIBFLAGS	:=	-pthread
-DEBUGFLAG	:=	-g3
+DEBUGFLAG	:=	-gdwarf-4
 CFLAGS		:=	-Wall -Wextra -Werror ${DEBUGFLAG}
 CPPFLAGS	:=	-I includes
 

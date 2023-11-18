@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 13:35:29 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 19:23:02 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <stdint.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-# include "debug_colors.h"
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
@@ -80,12 +78,17 @@ bool			are_valid_params(int argc, char **argv);
 bool			init_data(int argc, char **argv, t_data *data);
 
 bool			start_sim(t_data *data);
-
 void			*sim_philo_routine(void *arg);
 
-unsigned int	timeval_to_ms(struct timeval tv);
+bool			create_threads(t_data *data);
+void			join_threads(t_data *data, unsigned int max_thread);
+
 bool			take_fork(t_fork *fork);
 void			drop_fork(t_fork *fork);
+void			wait_for_fork(t_philo *philo);
+bool			is_enough_meals(t_philo *philo);
+
+unsigned int	timeval_to_ms(struct timeval tv);
 bool			should_sim_stop(t_philo *philo);
 bool			complete_action(t_philo *philo, unsigned int time_for_action);
 

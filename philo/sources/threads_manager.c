@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:28:34 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 13:30:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/18 19:21:13 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,5 @@ bool	create_threads(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->sim_start_mutex);
-	return (1);
-}
-
-bool	start_sim(t_data *data)
-{
-	if (!create_threads(data))
-		return (0);
-	join_threads(data, data->number_of_philos - 1);
 	return (1);
 }
