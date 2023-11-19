@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 23:18:18 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/19 05:54:43 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ bool	init_data(int argc, char **argv, t_data *data)
 	if (!init_philos(&data->philos, data))
 	{
 		sem_close(data->forks);
+		sem_unlink("forks");
 		return (0);
 	}
 	return (1);
