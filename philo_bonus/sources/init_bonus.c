@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/19 05:54:43 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/19 06:06:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	init_forks(sem_t **forks, unsigned int number_of_philos)
 void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
 {
 	philos[n].number = n;
+	philos[n].pid = (pid_t) -1;
 	philos[n].last_time_philo_ate = data->ref_time;
 	philos[n].number_of_times_philo_has_eaten = 0;
 }
