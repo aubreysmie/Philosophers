@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 23:28:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/19 06:46:27 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/time.h>
+# include <pthread.h>
 # include <semaphore.h>
 
 # define INTERNAL_ERROR 1
@@ -40,8 +41,10 @@ typedef struct s_philo
 {
 	unsigned int	number;
 	pid_t			pid;
+	pthread_t		thread;
 	struct timeval	last_time_philo_ate;
 	unsigned int	number_of_times_philo_has_eaten;
+	t_data			*data;
 }	t_philo;
 
 typedef struct s_data
@@ -67,5 +70,11 @@ unsigned int	ft_atoui(char *nptr);
 bool			init_data(int argc, char **argv, t_data *data);
 
 void			destroy_data(t_data *data);
+
+bool			start_sim(t_data *data);
+
+
+void			disp_action(unsigned int philo_nb, enum e_action action,
+					t_data *data, struct timeval *needed_tv);
 
 #endif
