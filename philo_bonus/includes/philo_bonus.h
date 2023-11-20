@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/20 21:58:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/20 22:39:06 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
+
+# define UNLINK 1
+
+enum	e_exit_status
+{
+	FUNCTION_ERROR = 1,
+
+};
 
 enum	e_action
 {
@@ -70,7 +78,7 @@ unsigned int	ft_atoui(char *nptr);
 
 bool			init_data(int argc, char **argv, t_data *data);
 
-void			destroy_data(t_data *data);
+void			destroy_data(t_data *data, bool should_unlink);
 
 bool			start_sim(t_data *data);
 
