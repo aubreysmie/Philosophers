@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 14:56:45 by ekhaled           #+#    #+#              #
-#    Updated: 2023/11/20 22:09:39 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/11/20 22:16:50 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ CFLAGS		:=	-Wall -Wextra -Werror ${DEBUGFLAG}
 CPPFLAGS	:=	-I includes
 
 
-# RM			:=	rm -r
+RM			:=	${RM} -r
 DIR_DUP		=	mkdir -p ${@D}
 
 
@@ -49,7 +49,8 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 	${CC} ${LIBFLAGS} ${CFLAGS} ${CPPFLAGS} -c -o $@ $<
 
 clean:
-	${RM} ${OBJS}
+	${RM} ${OBJ_DIR}
+	
 
 fclean: clean
 	${RM} ${NAME}
