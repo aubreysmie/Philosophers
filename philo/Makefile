@@ -28,10 +28,8 @@ SRCS		:=	destroy.c \
 SRCS		:=	${SRCS:%=${SRC_DIR}/%}
 OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
-# CC			:=	cc
 LIBFLAGS	:=	-pthread
-DEBUGFLAG	:=	-gdwarf-4
-CFLAGS		:=	-Wall -Wextra -Werror ${DEBUGFLAG}
+CFLAGS		:=	-Wall -Wextra -Werror
 CPPFLAGS	:=	-I includes
 
 
