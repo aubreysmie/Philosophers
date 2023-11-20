@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/20 18:44:42 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/20 23:16:55 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	init_forks(sem_t **forks, unsigned int number_of_philos)
 {
-	*forks = sem_open("forks", O_CREAT, 777, number_of_philos);
+	*forks = sem_open("/forks", O_CREAT, 777, number_of_philos);
 	if (*forks == SEM_FAILED)
 	{
 		write(2, "An internal error has occured\n", 30);
@@ -69,7 +69,7 @@ bool	init_data(int argc, char **argv, t_data *data)
 	if (!init_philos(&data->philos, data))
 	{
 		sem_close(data->forks);
-		sem_unlink("forks");
+		sem_unlink("/forks");
 		return (0);
 	}
 	return (1);
