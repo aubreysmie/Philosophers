@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/19 06:47:00 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/20 18:44:42 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	init_philos(t_philo **philos, t_data *data)
 	unsigned int	n;
 
 	n = 0;
-	*philos = malloc (sizeof(t_philo) * data->number_of_philos);
+	*philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (!*philos)
 	{
 		write(2, "An internal error has occured\n", 30);
