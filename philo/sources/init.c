@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 00:39:18 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 23:21:43 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/20 22:14:46 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool	init_data(int argc, char **argv, t_data *data)
 		return (0);
 	if (!init_philos(&data->philos, data))
 	{
-		destroy_all(data);
+		destroy_data(data);
 		return (0);
 	}
 	return (1);
