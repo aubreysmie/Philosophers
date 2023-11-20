@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/19 06:46:27 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/20 21:58:45 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define INTERNAL_ERROR 1
 # define ARG_ERROR 2
@@ -73,6 +74,9 @@ void			destroy_data(t_data *data);
 
 bool			start_sim(t_data *data);
 
+bool			create_processes(t_data *data);
+
+void			sim_philo_routine(t_philo *philo);
 
 void			disp_action(unsigned int philo_nb, enum e_action action,
 					t_data *data, struct timeval *needed_tv);
