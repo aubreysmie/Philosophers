@@ -78,6 +78,8 @@ bool			create_processes(t_data *data);
 
 void			sim_philo_routine(t_philo *philo);
 
+unsigned int	timeval_to_ms(struct timeval tv);
+
 void			disp_action(unsigned int philo_nb, enum e_action action,
 					t_data *data, struct timeval *needed_tv);
 
