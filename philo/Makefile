@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 14:56:45 by ekhaled           #+#    #+#              #
-#    Updated: 2023/11/18 19:17:31 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/11/20 22:09:39 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS		:=	destroy.c \
 				parse_helpers.c \
 				parse.c \
 				threads_manager.c \
-				time_checks.c
+				time_manager.c
 SRCS		:=	${SRCS:%=${SRC_DIR}/%}
 OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
