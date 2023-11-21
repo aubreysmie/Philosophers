@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/20 22:39:06 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/21 02:26:04 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 
 enum	e_exit_status
 {
-	FUNCTION_ERROR = 1,
-
+	ERROR_EXIT_STATUS = 1,
+	DONE_EATING_EXIT_STATUS,
+	DEATH_EXIT_STATUS
 };
 
 enum	e_action
