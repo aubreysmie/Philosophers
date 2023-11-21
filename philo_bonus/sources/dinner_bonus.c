@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 02:58:47 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/21 04:46:37 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,35 @@ void	sim_philo_routine(t_philo *philo)
 	}
 }
 
+bool	stop_sim(t_data *data)
+{
+	pthread_t		*checking_threads;
+
+	checking_threads = malloc(sizeof(pthread_t) * data->number_of_philos);
+	if (!checking_threads)
+	{
+		write(2, "An internal error has occured\n", 30);
+		return (0);
+	}
+	if (!create_threads(data, checking_threads))
+	{
+		free(checking_threads);
+		return (0);
+	}
+	if (!join_threads(checking_threads,
+			data->number_of_philos - 1, RETURN_ERROR))
+	{
+		free(checking_threads);
+		return (0);
+	}
+	free(checking_threads);
+	return (1);
+}
+
 bool	start_sim(t_data *data)
 {
 	if (!create_processes(data))
+		return (0);
+	if (!stop_sim(data))
 		return (0);
 }

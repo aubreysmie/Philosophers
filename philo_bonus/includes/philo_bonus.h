@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 02:26:04 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/21 04:45:45 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/time.h>
@@ -29,11 +30,13 @@
 
 # define UNLINK 1
 
+# define RETURN_ERROR 1
+
 enum	e_exit_status
 {
 	ERROR_EXIT_STATUS = 1,
-	DONE_EATING_EXIT_STATUS,
-	DEATH_EXIT_STATUS
+	DEATH_EXIT_STATUS,
+	DONE_EATING_EXIT_STATUS
 };
 
 enum	e_action
@@ -84,6 +87,9 @@ void			destroy_data(t_data *data, bool should_unlink);
 bool			start_sim(t_data *data);
 
 bool			create_processes(t_data *data);
+bool			create_threads(t_data *data, pthread_t *checking_threads);
+bool			join_threads(pthread_t *checking_threads,
+					unsigned int max_thread, bool should_error_return);
 
 void			sim_philo_routine(t_philo *philo);
 
