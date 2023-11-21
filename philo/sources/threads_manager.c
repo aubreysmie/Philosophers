@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:28:34 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/20 22:07:46 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/21 04:56:09 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	create_threads(t_data *data)
 			data->sim_status.should_sim_stop = true;
 			pthread_mutex_unlock(&data->sim_start_mutex);
 			if (i)
-				join_threads(data, i);
+				join_threads(data, i - 1);
 			return (0);
 		}
 		i++;
