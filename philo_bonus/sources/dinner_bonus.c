@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 04:46:37 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/21 04:54:23 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sim_eating(t_philo *philo)
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
 	{
-		sem_close(philo->data->forks);
+		destroy_data(philo->data, !UNLINK);
 		exit(DONE_EATING_EXIT_STATUS);
 	}
 	sem_post(philo->data->forks);
