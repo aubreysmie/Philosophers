@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:39:14 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:40:11 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	init_philos(t_philo **philos, t_data *data)
 	}
 	while (n < data->number_of_philos)
 	{
-		init_philo_n(*philos, data, n)
+		init_philo_n(*philos, data, n);
 		n++;
 	}
 	return (1);

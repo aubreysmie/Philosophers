@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 06:15:46 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 04:43:32 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:41:09 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ bool	create_processes(t_data *data)
 			sim_philo_routine(data->philos + i);
 		i++;
 	}
+	return (1);
 }
 

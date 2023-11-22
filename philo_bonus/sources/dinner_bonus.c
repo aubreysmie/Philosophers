@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:12:17 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:38:11 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	*perform_death_check_routine(void *arg)
 	t_philo			*philo;
 	struct timeval	tv;
 	unsigned int	interval;
+	// t_data			*data_to_free;
 
 	philo = (t_philo *)arg;
 	while (true)
@@ -81,7 +82,7 @@ void	sim_philo_routine(t_philo *philo)
 		sem_close(philo->data->forks);
 		exit(ERROR_EXIT_STATUS);
 	}
-	if (pthread_create(philo->thread, NULL,
+	if (pthread_create(&philo->thread, NULL,
 			&perform_death_check_routine, (void *)philo))
 	{
 		write(2, "An internal error has occured\n", 30);
@@ -125,4 +126,5 @@ bool	start_sim(t_data *data)
 		return (0);
 	if (!stop_sim(data))
 		return (0);
+	return (1);
 }

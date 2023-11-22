@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 06:00:34 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:42:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdbool.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
@@ -97,6 +98,7 @@ void			destroy_data(t_data *data, bool should_unlink);
 bool			start_sim(t_data *data);
 
 bool			create_processes(t_data *data);
+void			destroy_processes(t_philo *philos, unsigned int max_process);
 bool			create_threads(t_data *data, pthread_t *checking_threads);
 bool			join_threads(pthread_t *checking_threads,
 					unsigned int max_thread, bool should_error_return);

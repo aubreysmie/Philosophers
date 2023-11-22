@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 04:09:11 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 04:45:56 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:50:11 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	*perform_sim_check_routine(void *arg)
 	int		exit_status;
 
 	philo = (t_philo *)arg;
+	exit_status = -1;
 	if (waitpid(philo->pid, &wstatus, 0) == -1)
 		return (NULL);
 	if (WIFEXITED(wstatus))
@@ -37,6 +38,7 @@ void	*perform_sim_check_routine(void *arg)
 	}
 	if (exit_status == DONE_EATING_EXIT_STATUS)
 		return (NULL);
+	return (NULL);
 }
 
 bool	join_threads(pthread_t *checking_threads,
@@ -49,12 +51,12 @@ bool	join_threads(pthread_t *checking_threads,
 	while (i)
 	{
 		pthread_join(checking_threads[i], (void **)&retval);
-		if (should_error_return && retval == ARG_ERROR)
+		if (should_error_return && retval == (void *)INTERNAL_ERROR)
 			return (0);
 		i++;
 	}
 	pthread_join(checking_threads[i], (void **)&retval);
-	if (should_error_return && retval == ARG_ERROR)
+	if (should_error_return && retval == (void *)INTERNAL_ERROR)
 		return (0);
 	return (1);
 }
