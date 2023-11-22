@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/21 04:45:45 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 06:00:34 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ enum	e_action
 
 typedef struct s_data	t_data;
 
+typedef struct s_semaphore
+{
+	char	*name;
+	sem_t	*semaphore;
+}	t_semaphore;
+
 typedef struct s_philo
 {
 	unsigned int	number;
@@ -57,6 +63,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	struct timeval	last_time_philo_ate;
 	unsigned int	number_of_times_philo_has_eaten;
+	t_semaphore		protection_sem;
 	t_data			*data;
 }	t_philo;
 
@@ -81,6 +88,9 @@ int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
 bool			init_data(int argc, char **argv, t_data *data);
+bool			init_protection_sem(t_semaphore *protection_sem,
+					unsigned int philo_nb);
+
 
 void			destroy_data(t_data *data, bool should_unlink);
 

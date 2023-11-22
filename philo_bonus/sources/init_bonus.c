@@ -6,11 +6,24 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 05:28:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 05:48:02 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+bool	init_protection_sem(t_semaphore *protection_sem, unsigned int philo_nb)
+{
+	protection_sem->name = (char [3]){'/', philo_nb + '0', '\0'};
+	protection_sem->semaphore
+		= sem_open(protection_sem->name, O_CREAT, 777, 1);
+	if (!protection_sem->semaphore)
+	{
+		write(2, "An internal error has occured\n", 30);
+		return (0);
+	}
+	return (1);
+}
 
 bool	init_forks_sem(sem_t **forks, unsigned int number_of_philos)
 {
@@ -23,13 +36,14 @@ bool	init_forks_sem(sem_t **forks, unsigned int number_of_philos)
 	return (1);
 }
 
-void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
+bool	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
 {
 	philos[n].number = n;
 	philos[n].pid = (pid_t) -1;
 	philos[n].thread = (pthread_t) -1;
 	philos[n].last_time_philo_ate = data->ref_time;
 	philos[n].number_of_times_philo_has_eaten = 0;
+	philos[n].protection_sem = (t_semaphore){NULL, NULL};
 	philos[n].data = data;
 }
 
@@ -46,7 +60,8 @@ bool	init_philos(t_philo **philos, t_data *data)
 	}
 	while (n < data->number_of_philos)
 	{
-		init_philo_n(*philos, data, n);
+		if (!init_philo_n(*philos, data, n))
+			return (0);
 		n++;
 	}
 	return (1);
