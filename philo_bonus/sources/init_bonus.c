@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 05:48:02 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:39:14 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	init_forks_sem(sem_t **forks, unsigned int number_of_philos)
 	return (1);
 }
 
-bool	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
+void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
 {
 	philos[n].number = n;
 	philos[n].pid = (pid_t) -1;
@@ -60,8 +60,7 @@ bool	init_philos(t_philo **philos, t_data *data)
 	}
 	while (n < data->number_of_philos)
 	{
-		if (!init_philo_n(*philos, data, n))
-			return (0);
+		init_philo_n(*philos, data, n)
 		n++;
 	}
 	return (1);
