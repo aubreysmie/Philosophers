@@ -107,12 +107,8 @@ bool	stop_sim(t_data *data)
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
-	if (!create_threads(data, checking_threads))
-	{
-		free(checking_threads);
-		return (0);
-	}
-	if (!join_threads(checking_threads,
+	if (!create_threads(data, checking_threads)
+		|| !join_threads(checking_threads,
 			data->number_of_philos - 1, RETURN_ERROR))
 	{
 		free(checking_threads);
