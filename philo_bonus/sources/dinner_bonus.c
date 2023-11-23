@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:38:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/11/23 07:43:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	*perform_death_check_routine(void *arg)
 			disp_action(philo->number + 1, DIED, philo->data, &tv);
 			sem_close(philo->data->forks);
 			sem_close(philo->protection_sem.semaphore);
-			sem_unlink(philo->protection_sem.name);
 			exit(DEATH_EXIT_STATUS);
 		}
 		usleep(5000);
@@ -88,7 +87,6 @@ void	sim_philo_routine(t_philo *philo)
 		write(2, "An internal error has occured\n", 30);
 		sem_close(philo->data->forks);
 		sem_close(philo->protection_sem.semaphore);
-		sem_unlink(philo->protection_sem.name);
 		exit(ERROR_EXIT_STATUS);
 	}
 	while (true)
