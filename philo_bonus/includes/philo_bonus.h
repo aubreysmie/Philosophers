@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:42:14 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 10:40:08 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ bool			init_protection_sem(t_semaphore *protection_sem,
 
 
 void			destroy_data(t_data *data, bool should_unlink);
+void			unlink_protection_sems(unsigned int number_of_philos);
 
 bool			start_sim(t_data *data);
 

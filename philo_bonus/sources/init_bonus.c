@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:40:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 11:06:58 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ bool	init_data(int argc, char **argv, t_data *data)
 	else
 		data->number_of_times_each_philo_must_eat = -1;
 	data->number_of_philos_that_ate_enough = 0;
+	sem_unlink("/forks");
+	unlink_protection_sems(data->number_of_philos);
 	gettimeofday(&data->ref_time, NULL);
 	if (!init_forks_sem(&data->forks, data->number_of_philos))
 		return (0);
