@@ -6,16 +6,34 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/23 07:43:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 11:24:11 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+void	wait_for_fork(t_philo *philo)
+{
+	struct timeval			tv;
+	unsigned int			time_since_ate;
+
+	if (!philo->data->time_to_die)
+		return ;
+	if (philo->number_of_times_philo_has_eaten == 0)
+		return ;
+	sem_wait(philo->protection_sem.semaphore);
+	gettimeofday(&tv, NULL);
+	time_since_ate = timeval_to_ms(tv)
+		- timeval_to_ms(philo->last_time_philo_ate);
+	sem_post(philo->protection_sem.semaphore);
+	usleep(philo->data->time_to_eat * 1000
+		* (1 - ((float) time_since_ate) / (float) philo->data->time_to_die));
+}
+
 void	sim_thinking(t_philo *philo)
 {
 	disp_action(philo->number + 1, THINKING, philo->data, NULL);
-	//perhaps proportionnal waiting function here
+	wait_for_fork(philo);
 	sem_wait(philo->data->forks);
 	sem_wait(philo->data->forks);
 	disp_action(philo->number + 1, TAKEN_A_FORK,
