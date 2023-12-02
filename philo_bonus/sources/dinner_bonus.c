@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/02 11:37:08 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 12:22:33 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ void	*perform_death_check_routine(void *arg)
 		sem_post(philo->protection_sem.semaphore);
 		if (interval >= philo->data->time_to_die)
 		{
+			sem_wait(philo->data->print_protection_sem);
 			disp_action(philo->number + 1, DIED, philo->data, &tv);
-			sem_close(philo->data->forks);
+			sem_close(philo->data->print_protection_sem);
 			sem_close(philo->protection_sem.semaphore);
+			sem_close(philo->data->forks);
 			exit(DEATH_EXIT_STATUS);
 		}
 		usleep(5000);
