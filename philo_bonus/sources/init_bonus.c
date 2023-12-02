@@ -17,7 +17,7 @@ bool	init_protection_sem(t_semaphore *protection_sem, unsigned int philo_nb)
 	protection_sem->name = (char [3]){'/', philo_nb + '0', '\0'};
 	protection_sem->semaphore
 		= sem_open(protection_sem->name, O_CREAT, 777, 1);
-	if (!protection_sem->semaphore)
+	if (protection_sem->semaphore == SEM_FAILED)
 	{
 		write(2, "An internal error has occured\n", 30);
 		return (0);
