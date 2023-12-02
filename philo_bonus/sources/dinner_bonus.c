@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/02 11:24:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 11:37:08 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	sim_eating(t_philo *philo)
 	gettimeofday(&philo->last_time_philo_ate, NULL);
 	sem_post(philo->protection_sem.semaphore);
 	usleep(philo->data->time_to_eat * 1000);
+	sem_post(philo->data->forks);
+	sem_post(philo->data->forks);
 	if (philo->number_of_times_philo_has_eaten
 		== philo->data->number_of_times_each_philo_must_eat)
 	{
 		// destroy_data(philo->data, !UNLINK);
 		exit(DONE_EATING_EXIT_STATUS);
 	}
-	sem_post(philo->data->forks);
-	sem_post(philo->data->forks);
 }
 
 void	sim_sleeping(t_philo *philo)
