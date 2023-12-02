@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 04:09:11 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/22 10:50:11 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/02 11:06:25 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	join_threads(pthread_t *checking_threads,
 		pthread_join(checking_threads[i], (void **)&retval);
 		if (should_error_return && retval == (void *)INTERNAL_ERROR)
 			return (0);
-		i++;
+		i--;
 	}
 	pthread_join(checking_threads[i], (void **)&retval);
 	if (should_error_return && retval == (void *)INTERNAL_ERROR)
