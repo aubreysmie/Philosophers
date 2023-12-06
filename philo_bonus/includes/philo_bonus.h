@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/02 10:40:08 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/06 14:07:23 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@
 # define UNLINK 1
 
 # define RETURN_ERROR 1
+
+enum	e_protection_sem_type
+{
+	ACCESS_SEM,
+	PRINT_SEM
+};
 
 enum	e_exit_status
 {
@@ -64,7 +70,8 @@ typedef struct s_philo
 	pthread_t		thread;
 	struct timeval	last_time_philo_ate;
 	unsigned int	number_of_times_philo_has_eaten;
-	t_semaphore		protection_sem;
+	t_semaphore		access_protection_sem;
+	t_semaphore		print_protection_sem;
 	t_data			*data;
 }	t_philo;
 
@@ -79,6 +86,7 @@ typedef struct s_data
 	struct timeval	ref_time;
 	t_philo			*philos;
 	sem_t			*forks;
+	sem_t			*death_print_protection_sem;
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv);
@@ -89,12 +97,11 @@ int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
 bool			init_data(int argc, char **argv, t_data *data);
-bool			init_protection_sem(t_semaphore *protection_sem,
-					unsigned int philo_nb);
-
+bool			init_philo_sem(t_semaphore *sem, unsigned int philo_nb,
+					enum e_protection_sem_type sem_type);
 
 void			destroy_data(t_data *data, bool should_unlink);
-void			unlink_protection_sems(unsigned int number_of_philos);
+void			unlink_sems(unsigned int number_of_philos);
 
 bool			start_sim(t_data *data);
 
@@ -108,7 +115,7 @@ void			sim_philo_routine(t_philo *philo);
 
 unsigned int	timeval_to_ms(struct timeval tv);
 
-void			disp_action(unsigned int philo_nb, enum e_action action,
+void			disp_action(t_philo *philo, enum e_action action,
 					t_data *data, struct timeval *needed_tv);
 
 #endif

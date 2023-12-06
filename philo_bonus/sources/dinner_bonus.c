@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 05:48:07 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/02 12:22:33 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/06 14:08:52 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@ void	wait_for_fork(t_philo *philo)
 		return ;
 	if (philo->number_of_times_philo_has_eaten == 0)
 		return ;
-	sem_wait(philo->protection_sem.semaphore);
+	sem_wait(philo->access_protection_sem.semaphore);
 	gettimeofday(&tv, NULL);
 	time_since_ate = timeval_to_ms(tv)
 		- timeval_to_ms(philo->last_time_philo_ate);
-	sem_post(philo->protection_sem.semaphore);
+	sem_post(philo->access_protection_sem.semaphore);
 	usleep(philo->data->time_to_eat * 1000
 		* (1 - ((float) time_since_ate) / (float) philo->data->time_to_die));
 }
 
 void	sim_thinking(t_philo *philo)
 {
-	disp_action(philo->number + 1, THINKING, philo->data, NULL);
+	disp_action(philo, THINKING, philo->data, NULL);
 	wait_for_fork(philo);
 	sem_wait(philo->data->forks);
 	sem_wait(philo->data->forks);
-	disp_action(philo->number + 1, TAKEN_A_FORK,
+	disp_action(philo, TAKEN_A_FORK,
 		philo->data, NULL);
 }
 
 void	sim_eating(t_philo *philo)
 {
 	philo->number_of_times_philo_has_eaten++;
-	sem_wait(philo->protection_sem.semaphore);
-	disp_action(philo->number + 1, EATING, philo->data, NULL);
+	sem_wait(philo->access_protection_sem.semaphore);
+	disp_action(philo, EATING, philo->data, NULL);
 	gettimeofday(&philo->last_time_philo_ate, NULL);
-	sem_post(philo->protection_sem.semaphore);
+	sem_post(philo->access_protection_sem.semaphore);
 	usleep(philo->data->time_to_eat * 1000);
 	sem_post(philo->data->forks);
 	sem_post(philo->data->forks);
@@ -60,7 +60,7 @@ void	sim_eating(t_philo *philo)
 
 void	sim_sleeping(t_philo *philo)
 {
-	disp_action(philo->number + 1, SLEEPING, philo->data, NULL);
+	disp_action(philo, SLEEPING, philo->data, NULL);
 	usleep(philo->data->time_to_sleep * 1000);
 }
 
@@ -74,17 +74,17 @@ void	*perform_death_check_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (true)
 	{
-		sem_wait(philo->protection_sem.semaphore);
+		sem_wait(philo->access_protection_sem.semaphore);
 		gettimeofday(&tv, NULL);
 		interval = timeval_to_ms(tv)
 			- timeval_to_ms(philo->last_time_philo_ate);
-		sem_post(philo->protection_sem.semaphore);
+		sem_post(philo->access_protection_sem.semaphore);
 		if (interval >= philo->data->time_to_die)
 		{
-			sem_wait(philo->data->print_protection_sem);
-			disp_action(philo->number + 1, DIED, philo->data, &tv);
-			sem_close(philo->data->print_protection_sem);
-			sem_close(philo->protection_sem.semaphore);
+			sem_wait(philo->data->death_print_protection_sem);
+			disp_action(philo, DIED, philo->data, &tv);
+			sem_close(philo->data->death_print_protection_sem);
+			sem_close(philo->access_protection_sem.semaphore);
 			sem_close(philo->data->forks);
 			exit(DEATH_EXIT_STATUS);
 		}
@@ -96,17 +96,21 @@ void	*perform_death_check_routine(void *arg)
 void	sim_philo_routine(t_philo *philo)
 {
 	usleep(1000);
-	if (!init_protection_sem(&philo->protection_sem, philo->number))
+	if (!init_philo_sem(&philo->access_protection_sem, philo->number, ACCESS_SEM)
+		|| !init_philo_sem(&philo->print_protection_sem, philo->number, PRINT_SEM))
 	{
-		sem_close(philo->data->forks);
+		sem_close(philo->access_protection_sem.semaphore);
+		sem_close(philo->print_protection_sem.semaphore);
+		destroy_data(philo->data, !UNLINK);
 		exit(ERROR_EXIT_STATUS);
 	}
 	if (pthread_create(&philo->thread, NULL,
 			&perform_death_check_routine, (void *)philo))
 	{
 		write(2, "An internal error has occured\n", 30);
-		sem_close(philo->data->forks);
-		sem_close(philo->protection_sem.semaphore);
+		sem_close(philo->access_protection_sem.semaphore);
+		sem_close(philo->print_protection_sem.semaphore);
+		destroy_data(philo->data, !UNLINK);
 		exit(ERROR_EXIT_STATUS);
 	}
 	while (true)
@@ -127,8 +131,12 @@ bool	stop_sim(t_data *data)
 		write(2, "An internal error has occured\n", 30);
 		return (0);
 	}
-	if (!create_threads(data, checking_threads)
-		|| !join_threads(checking_threads,
+	if (!create_threads(data, checking_threads))
+	{
+		free(checking_threads);
+		return (0);
+	}
+	if (!join_threads(checking_threads,
 			data->number_of_philos - 1, RETURN_ERROR))
 	{
 		free(checking_threads);
