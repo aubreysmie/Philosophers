@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/07 18:05:07 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/09 22:39:36 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef struct s_semaphore
 	sem_t	*semaphore;
 }	t_semaphore;
 
-typedef struct s_philo_status
-{
-	t_semaphore	status_protection_sem;
-	bool		should_philo_stop;
-}	t_philo_status;
+// typedef struct s_status
+// {
+// 	t_semaphore	status_protection_sem;
+// 	bool		should_stop;
+// }	t_status;
 
 typedef struct s_philo
 {
@@ -76,10 +76,8 @@ typedef struct s_philo
 	pid_t			pid;
 	pthread_t		thread;
 	struct timeval	last_time_philo_ate;
-	unsigned int	number_of_times_philo_has_eaten;
-	t_semaphore		access_protection_sem;
-	t_semaphore		print_protection_sem;
-	t_philo_status	philo_status;
+	int				number_of_times_philo_has_eaten;
+	t_semaphore		access_protection;
 	t_data			*data;
 }	t_philo;
 
@@ -89,12 +87,13 @@ typedef struct s_data
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	number_of_times_each_philo_must_eat;
-	unsigned int	number_of_philos_that_ate_enough;
+	int				number_of_times_each_philo_must_eat;
 	struct timeval	ref_time;
 	t_philo			*philos;
 	sem_t			*forks;
-	sem_t			*death_print_protection_sem;
+	sem_t			*print_protection;
+	sem_t			*should_stop;
+	sem_t			*meals;
 }	t_data;
 
 bool			are_valid_params(int argc, char **argv);
@@ -105,8 +104,7 @@ int				ft_strcmp(char *s1, char *s2);
 unsigned int	ft_atoui(char *nptr);
 
 bool			init_data(int argc, char **argv, t_data *data);
-bool			init_philo_sem(t_semaphore *sem, unsigned int philo_nb,
-					enum e_protection_sem_type sem_type);
+bool			init_philo_sem(t_semaphore *sem, unsigned int philo_nb);
 
 void			destroy_data(t_data *data, bool should_unlink);
 void			unlink_sems(unsigned int number_of_philos);

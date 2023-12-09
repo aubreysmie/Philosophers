@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 06:29:58 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/06 13:57:52 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/09 23:13:10 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	disp_action(t_philo *philo, enum e_action action,
 	struct timeval			tv;
 	unsigned int			interval;
 
-	sem_wait(philo->print_protection_sem.semaphore);
+	sem_wait(philo->data->print_protection);
 	if (action == DIED)
 		tv = *needed_tv;
 	else
 		gettimeofday(&tv, NULL);
 	interval = timeval_to_ms(tv) - timeval_to_ms(data->ref_time);
+	(void) interval;
 	if (action == TAKEN_A_FORK)
 		printf("%u %d has taken a fork\n", interval, philo->number + 1);
 	if (action == THINKING)
@@ -34,5 +35,6 @@ void	disp_action(t_philo *philo, enum e_action action,
 		printf("%u %d is eating\n", interval, philo->number + 1);
 	if (action == SLEEPING)
 		printf("%u %d is sleeping\n", interval, philo->number + 1);
-	sem_post(philo->print_protection_sem.semaphore);
+	if (action != DIED)
+		sem_post(philo->data->print_protection);
 }
