@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/06 14:07:23 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:05:07 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 enum	e_protection_sem_type
 {
 	ACCESS_SEM,
-	PRINT_SEM
+	PRINT_SEM,
+	STATUS_SEM
 };
 
 enum	e_exit_status
@@ -63,6 +64,12 @@ typedef struct s_semaphore
 	sem_t	*semaphore;
 }	t_semaphore;
 
+typedef struct s_philo_status
+{
+	t_semaphore	status_protection_sem;
+	bool		should_philo_stop;
+}	t_philo_status;
+
 typedef struct s_philo
 {
 	unsigned int	number;
@@ -72,6 +79,7 @@ typedef struct s_philo
 	unsigned int	number_of_times_philo_has_eaten;
 	t_semaphore		access_protection_sem;
 	t_semaphore		print_protection_sem;
+	t_philo_status	philo_status;
 	t_data			*data;
 }	t_philo;
 
@@ -111,7 +119,7 @@ bool			create_threads(t_data *data, pthread_t *checking_threads);
 bool			join_threads(pthread_t *checking_threads,
 					unsigned int max_thread, bool should_error_return);
 
-void			sim_philo_routine(t_philo *philo);
+void			create_philo(t_philo *philo);
 
 unsigned int	timeval_to_ms(struct timeval tv);
 

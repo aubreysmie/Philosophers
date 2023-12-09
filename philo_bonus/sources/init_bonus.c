@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/06 14:09:16 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/09 12:13:49 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	init_philo_sem(t_semaphore *sem, unsigned int philo_nb,
 		c = 'a';
 	if (sem_type == PRINT_SEM)
 		c = 'p';
+	if (sem_type == STATUS_SEM)
+		c = 's';
 	sem->name = (char [4]){'/', c, philo_nb + '0', '\0'};
 	sem->semaphore
 		= sem_open(sem->name, O_CREAT, 666, 1);
@@ -70,6 +72,7 @@ void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
 	philos[n].number_of_times_philo_has_eaten = 0;
 	philos[n].access_protection_sem = (t_semaphore){NULL, NULL};
 	philos[n].print_protection_sem = (t_semaphore){NULL, NULL};
+	philos[n].philo_status = (t_philo_status){(t_semaphore){NULL, NULL}, false};
 	philos[n].data = data;
 }
 

@@ -44,7 +44,7 @@ bool	create_processes(t_data *data)
 		if (cpid > 0)
 			data->philos[i].pid = cpid;
 		if (cpid == 0)
-			sim_philo_routine(data->philos + i);
+			create_philo(data->philos + i);
 		i++;
 	}
 	return (1);

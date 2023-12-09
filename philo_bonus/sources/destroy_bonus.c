@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 23:26:24 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/06 13:26:40 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/09 12:02:46 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	unlink_protection_sems(unsigned int number_of_philos,
 		c = 'a';
 	if (sem_type == PRINT_SEM)
 		c = 'p';
+	if (sem_type == STATUS_SEM)
+		c = 's';
 	i = 0;
 	while (i < number_of_philos)
 	{
@@ -37,7 +39,7 @@ void	unlink_sems(unsigned int number_of_philos)
 	sem_unlink("/death_print_protection_sem");
 	unlink_protection_sems(number_of_philos, PRINT_SEM);
 	unlink_protection_sems(number_of_philos, ACCESS_SEM);
-
+	unlink_protection_sems(number_of_philos, STATUS_SEM);
 }
 
 void	destroy_data(t_data *data, bool should_unlink)
