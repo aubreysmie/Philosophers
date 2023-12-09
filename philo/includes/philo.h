@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/11/18 23:32:23 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/09 23:35:17 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct timeval	last_time_philo_ate;
-	unsigned int	number_of_times_philo_has_eaten;
+	int				number_of_times_philo_has_eaten;
 	t_data			*data;
 }	t_philo;
 
@@ -64,7 +64,7 @@ typedef struct s_data
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	number_of_times_each_philo_must_eat;
+	int				number_of_times_each_philo_must_eat;
 	unsigned int	number_of_philos_that_ate_enough;
 	struct timeval	ref_time;
 	t_sim_status	sim_status;
