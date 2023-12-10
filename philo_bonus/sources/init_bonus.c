@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 00:11:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/09 23:12:57 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/10 23:13:35 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,10 @@ bool	init_data_sem(sem_t **sem, char *sem_name, unsigned int init_val)
 bool	init_sems(t_data *data)
 {
 	unlink_sems(data->number_of_philos);
-	if (!init_data_sem(&data->print_protection, "/print_protection", 1))
-		return (0);
-	if (!init_data_sem(&data->forks, "/forks", data->number_of_philos))
-	{
-		sem_close(data->print_protection);
-		sem_unlink("/print_protection");
-		return (0);
-	}
-	if (!init_data_sem(&data->should_stop, "/should_stop", 0))
-	{
-		sem_close(data->print_protection);
-		sem_close(data->forks);
-		sem_unlink("/print_protection");
-		sem_unlink("forks");
-		return (0);
-	}
-	if (!init_data_sem(&data->meals, "/meals", 0))
+	if (!init_data_sem(&data->print_protection, "/print_protection", 1)
+		|| !init_data_sem(&data->forks, "/forks", data->number_of_philos)
+		|| !init_data_sem(&data->should_stop, "/should_stop", 0)
+		|| !init_data_sem(&data->meals, "/meals", 0))
 	{
 		sem_close(data->print_protection);
 		sem_close(data->forks);
@@ -66,17 +53,6 @@ bool	init_sems(t_data *data)
 		return (0);
 	}
 	return (1);
-}
-
-void	init_philo_n(t_philo *philos, t_data *data, unsigned int n)
-{
-	philos[n].number = n;
-	philos[n].pid = (pid_t) -1;
-	philos[n].thread = (pthread_t) -1;
-	philos[n].last_time_philo_ate = data->ref_time;
-	philos[n].number_of_times_philo_has_eaten = 0;
-	philos[n].access_protection = (t_semaphore){NULL, NULL};
-	philos[n].data = data;
 }
 
 bool	init_philos(t_philo **philos, t_data *data)
@@ -92,7 +68,15 @@ bool	init_philos(t_philo **philos, t_data *data)
 	}
 	while (n < data->number_of_philos)
 	{
-		init_philo_n(*philos, data, n);
+		(*philos)[n] = (t_philo){
+			.number = n,
+			.pid = (pid_t)(-1),
+			.thread = (pthread_t)(-1),
+			.last_time_philo_ate = data->ref_time,
+			.number_of_times_philo_has_eaten = 0,
+			.access_protection = (t_semaphore){NULL, NULL},
+			.data = data,
+		};
 		n++;
 	}
 	return (1);

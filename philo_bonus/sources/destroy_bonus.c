@@ -6,12 +6,11 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 23:26:24 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/09 23:14:22 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/10 23:02:00 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
 
 void	unlink_protection_sems(unsigned int number_of_philos)
 {

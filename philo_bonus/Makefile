@@ -6,7 +6,7 @@
 #    By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/22 09:52:09 by ekhaled           #+#    #+#              #
-#    Updated: 2023/11/22 09:57:40 by ekhaled          ###   ########.fr        #
+#    Updated: 2023/12/10 23:19:23 by ekhaled          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS		:=	destroy_bonus.c \
 				parse_bonus.c \
 				parse_helpers_bonus.c \
 				processes_manager_bonus.c \
-				threads_manager_bonus.c \
+				sim_manager_bonus.c \
 				time_manager_bonus.c
 SRCS		:=	${SRCS:%=${SRC_DIR}/%}
 OBJS		:=	${SRCS:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
@@ -47,7 +47,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 
 clean:
 	${RM} ${OBJ_DIR}
-	
+
 
 fclean: clean
 	${RM} ${NAME}

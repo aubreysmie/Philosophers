@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/09 22:39:36 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/10 23:15:17 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,6 @@
 
 # define UNLINK 1
 
-# define RETURN_ERROR 1
-
-enum	e_protection_sem_type
-{
-	ACCESS_SEM,
-	PRINT_SEM,
-	STATUS_SEM
-};
-
-enum	e_exit_status
-{
-	ERROR_EXIT_STATUS = 1,
-	DEATH_EXIT_STATUS,
-	DONE_EATING_EXIT_STATUS
-};
-
 enum	e_action
 {
 	TAKEN_A_FORK,
@@ -63,12 +47,6 @@ typedef struct s_semaphore
 	char	*name;
 	sem_t	*semaphore;
 }	t_semaphore;
-
-// typedef struct s_status
-// {
-// 	t_semaphore	status_protection_sem;
-// 	bool		should_stop;
-// }	t_status;
 
 typedef struct s_philo
 {
@@ -113,13 +91,14 @@ bool			start_sim(t_data *data);
 
 bool			create_processes(t_data *data);
 void			destroy_processes(t_philo *philos, unsigned int max_process);
-bool			create_threads(t_data *data, pthread_t *checking_threads);
-bool			join_threads(pthread_t *checking_threads,
-					unsigned int max_thread, bool should_error_return);
 
 void			create_philo(t_philo *philo);
+void			sim_philo_routine(t_philo *philo);
+void			end_meals_check(t_data *data);
 
 unsigned int	timeval_to_ms(struct timeval tv);
+void			*perform_death_check_routine(void *arg);
+void			wait_for_fork(t_philo *philo);
 
 void			disp_action(t_philo *philo, enum e_action action,
 					t_data *data, struct timeval *needed_tv);
