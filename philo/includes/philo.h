@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:37:42 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/09 23:35:17 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/11 15:52:16 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <stdint.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-# define INTERNAL_ERROR 1
-# define ARG_ERROR 2
 
 enum	e_action
 {

@@ -6,7 +6,7 @@
 /*   By: ekhaled <ekhaled@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:55:32 by ekhaled           #+#    #+#             */
-/*   Updated: 2023/12/10 23:15:17 by ekhaled          ###   ########.fr       */
+/*   Updated: 2023/12/11 15:52:33 by ekhaled          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 # include <pthread.h>
 # include <semaphore.h>
 # include <signal.h>
-
-# define INTERNAL_ERROR 1
-# define ARG_ERROR 2
 
 # define UNLINK 1
 
